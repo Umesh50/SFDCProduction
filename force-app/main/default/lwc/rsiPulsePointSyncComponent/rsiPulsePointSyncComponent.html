@@ -1,0 +1,94 @@
+<!--
+  @description       :
+  @author            : Tanmay Jain
+  @group             :
+  @last modified on  : 11-03-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-02-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
+    <lightning-card title="Sync with PulsePoint" icon-name="standard:opportunity">
+        <lightning-button-menu alternative-text="Show menu" variant="border-filled" onselect={handleOnselect} slot="actions"  menu-alignment="auto">
+            <lightning-menu-item value="MainMenuItem" label="Submit to Pulsepoint"></lightning-menu-item>
+            
+            <!--lightning-menu-item value="MenuItemOne" label="Create Application in Pulsepoint" disabled={enableCreateAppButton}></lightning-menu-item>
+            <lightning-menu-item value="MenuItemTwo" label="Sync Salesforce Data with Pulsepoint" disabled={syncButtonEnabled}></lightning-menu-item>
+            <lightning-menu-item value="MenuItemThree" label="Upload Signature Files" disabled={syncButtonEnabled}></lightning-menu-item>
+            <lightning-menu-item value="MenuItemFour" label="Promote" ></lightning-menu-item-->
+            <lightning-menu-item value="MenuItemSeven" label="Submit to Processor" disabled={syncButtonEnabled}></lightning-menu-item>
+            <lightning-menu-item value="MenuItemFive" label="Upload Additional Files" disabled={syncButtonEnabled}></lightning-menu-item>
+            <!--lightning-menu-item value="MenuItemSix" label="Demote" disabled={demoteDiabled}></lightning-menu-item-->
+            <lightning-menu-item value="MenuItemEight" label="Refresh Application Notes" disabled={syncButtonEnabled}></lightning-menu-item>
+        </lightning-button-menu>
+        <div if:true={displaySyncButton}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item size="10" padding="around-small">
+                            <p>Application #: {appNum}</p>
+                            <p>Form #: {formNum}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-button-icon icon-name="utility:upload" title="Create Application in Pulsepoint" variant="brand" disabled={enableCreateAppButton} onclick={createApplication}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item size="10" padding="around-small" style="align-self: center;"><p>Submit to Pulsepoint</p></lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-button-icon icon-name="utility:sync" title="Submit to Pulsepoint" variant="brand" disabled={syncButtonEnabled} onclick={submitToPulsePoint}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item size="10" padding="around-small" style="align-self: center;"><p>Sync Salesforce Data with Pulsepoint</p></lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-button-icon icon-name="utility:sync" title="Sync Salesforce Data with Pulsepoint" variant="brand" disabled={syncButtonEnabled} onclick={syncApplication}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item size="10" padding="around-small" style="align-self: center;"><p>Upload Additional Files</p></lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-button-icon icon-name="utility:sync" title="Upload Additional Files" variant="brand" disabled={syncButtonEnabled} onclick={syncAdditionalFiles}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item size="10" padding="around-small" style="align-self: center;"><p>Refresh Application Notes</p></lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-button-icon icon-name="utility:sync" title="Refresh Application Notes" variant="brand" disabled={syncButtonEnabled} onclick={refreshApplicationNotes}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout>
+                        <lightning-layout-item size="10" padding="around-small" style="align-self: center;"><p>Upload Signature to Pulsepoint</p></lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <lightning-button-icon icon-name="utility:upload" title="Upload Signature" variant="brand" disabled={syncButtonEnabled} onclick={uploadSignature}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+    <c-rsi-show-all-app-file record-id={recordId}></c-rsi-show-all-app-file>
+    <c-rsi-refresh-app-notes record-id={recordId}></c-rsi-refresh-app-notes>
+</template>

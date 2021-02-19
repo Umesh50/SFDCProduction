@@ -1,0 +1,344 @@
+<template>
+    <lightning-card>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+            </lightning-spinner>
+        </template>
+        <div style="border-bottom: 1px solid #dddbda;" class="slds-p-bottom_medium">
+            <lightning-card title="Equipment Detail" icon-name="standard:record_create">
+                <div class="slds-grid slds-wrap slds-form">
+                    <div class="slds-size_1-of-1 slds-p-top_x-small">
+                        <div class="slds-text-body_regular slds-p-left_medium">
+                            <b>
+                                Sales Percent Types
+                            </b>
+                            <lightning-helptext class="slds-p-left_xx-small"
+                                content="Total percentage between all types of sales must equal 100%">
+                            </lightning-helptext>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_medium">
+                        <lightning-input label="" name='Card_Present' type='number' onchange={changeHandler}
+                            value={Card_Present}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_medium">
+                        <lightning-input label="" name='Card_Not_Present' type='number' onchange={changeHandler}
+                            value={Card_Not_Present}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_medium">
+                        <lightning-input label="" name='Internet' type='number' onchange={changeHandler}
+                            value={Internet} class="slds-p-right_medium">
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-size_1-of-3 slds-p-left_large slds-p-top_xx-small">
+                        Card Present %
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_large slds-p-top_xx-small">
+                        Card Not Present %
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_large slds-p-top_xx-small">
+                        Internet %
+                    </div>
+                    <div class="slds-size_1-of-1 slds-clearfix">
+                        <div class="slds-float_right slds-p-top_small slds-p-right_medium">
+                            <lightning-button class="slds-m-top_small" variant="brand" label="Save" title="Save"
+                                onclick={handleAccountSave}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+        <!-- 
+        <template for:each={itemList} for:item="lineItem">
+            <div style="border-bottom: 1px solid #dddbda;" key={lineItem.index} class="slds-p-top_medium">
+                <lightning-card title={lineItem.eqCount} icon-name="custom:custom19" key={lineItem.index}>
+                    <c-line-item-edit-form oppty-id={opportunityId} record-id={lineItem.Id} onremoveitem={removeRow}
+                        onadditem={addRow} onshowsuccess={handleLineItemSuccess}>
+                    </c-line-item-edit-form>
+                </lightning-card>
+            </div>
+        </template> -->
+        <template if:true={isShowFirstSection}>
+            <lightning-card title="Equipment 1" icon-name="custom:custom19">
+                <div style="padding: 10px;" class="slds-p-top_medium">
+                    <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                        onsuccess={handleSuccess} record-id={recordId} id="Equipment1Id">
+                        <lightning-messages> </lightning-messages>
+                        <div class="slds-grid slds-wrap slds-form">
+                            <div class="slds-size_1-of-1" style="margin-top: -40px;">
+                                <div class="slds-float_right slds-p-right_medium">
+                                    <lightning-button-icon icon-name="utility:add" slot="actions"
+                                        onclick={addEquipment2} class="slds-p-right_small" alternative-text="Add">
+                                    </lightning-button-icon>
+                                    <lightning-button-icon icon-name="utility:dash" variant="brand"
+                                        onclick={removeEquipment2} alternative-text="Delete">
+                                    </lightning-button-icon>
+                                </div>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Equipment_Type__c" class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Equipment__c" class="slds-form-element_stacked"
+                                    required="true" value={defaultEquipment} onchange={handleEquipmentChange}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Ownership_Type__c" class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Quantity" class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="UnitPrice" class="slds-form-element_stacked"
+                                    required="true">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="PINPAD__c" onchange={handlePinpadChange}
+                                    class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="SIM_Card__c" class="slds-form-element_stacked">
+                                </lightning-input-field>
+
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="SEMI__c" class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="OpportunityId"
+                                    class="slds-form-element_stacked slds-hidden" value={opptyId}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field value={equipmentProduct2Id} field-name="Product2Id"
+                                    class="slds-form-element_stacked slds-hidden" required="true">
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-size_1-of-1 slds-clearfix">
+                                <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                    <lightning-button variant="brand" type="submit" label="Save">
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </lightning-card>
+
+            <template if:true={isShowSecondEquipmentSection}>
+                <lightning-card title="Equipment 2" icon-name="custom:custom19">
+                    <div style="padding: 10px;">
+                        <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                            onsuccess={handleSuccess} record-id={recordId} id="Equipment2Id">
+                            <lightning-messages> </lightning-messages>
+                            <div class="slds-grid slds-wrap slds-form">
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Equipment_Type__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Equipment__c" class="slds-form-element_stacked"
+                                        required="true" onchange={handleEquipment2Change}>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Ownership_Type__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Quantity" class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="UnitPrice" class="slds-form-element_stacked"
+                                        required="true">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="OpportunityId"
+                                        class="slds-form-element_stacked slds-hidden" value={opptyId}>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field value={equipment2Product2Id} field-name="Product2Id"
+                                        class="slds-form-element_stacked slds-hidden" required="true">
+                                    </lightning-input-field>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-clearfix">
+                                    <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                        <lightning-button variant="brand" type="submit" label="Save">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </lightning-card>
+            </template>
+            <template if:true={isShowSecondSection}>
+                <lightning-card title="E-commerce Setup" icon-name="custom:custom19">
+                    <div style="padding: 10px;">
+                        <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                            onsuccess={handleSuccess} onsubmit={onSubmitHandler} record-id={recordId}
+                            id="EcommerceSetup1">
+                            <lightning-messages> </lightning-messages>
+                            <div class="slds-grid slds-wrap slds-form">
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Gateway__c" class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Product_Website__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Contact_Us_Email__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-4 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Customer_Service_Phone_Number__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="OpportunityId"
+                                        class="slds-form-element_stacked slds-hidden" value={opptyId}>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field value={internetProductId} field-name="Product2Id"
+                                        class="slds-form-element_stacked slds-hidden" required="true">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="Quantity" value={internetQuantity}
+                                        class="slds-form-element_stacked slds-hidden">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="UnitPrice" value={internetPrice}
+                                        class="slds-form-element_stacked slds-hidden" required="true">
+                                    </lightning-input-field>
+                                </div>
+
+                                <div class="slds-size_1-of-1 slds-clearfix">
+                                    <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                        <lightning-button variant="brand" type="submit" label="Save">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </lightning-card>
+            </template>
+        </template>
+
+        <template if:true={isShowThirdSection}>
+            <lightning-card title="E-commerce Setup" icon-name="custom:custom19">
+                <div style="padding: 10px;">
+                    <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                        onsuccess={handleSuccess} onsubmit={onSubmitHandler} record-id={recordId} id="EcommerceSetup2">
+                        <lightning-messages> </lightning-messages>
+                        <div class="slds-grid slds-wrap slds-form">
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="VAR_Service_Provider__c"
+                                    class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Product_Website__c"
+                                    class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Contact_Us_Email__c"
+                                    class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-4 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Customer_Service_Phone_Number__c"
+                                    class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="OpportunityId"
+                                    class="slds-form-element_stacked slds-hidden" value={opptyId}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field value={internetProductId} field-name="Product2Id"
+                                    class="slds-form-element_stacked slds-hidden" required="true">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="Quantity" value={internetQuantity}
+                                    class="slds-form-element_stacked slds-hidden">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="UnitPrice" value={internetPrice}
+                                    class="slds-form-element_stacked slds-hidden" required="true">
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-size_1-of-1 slds-clearfix">
+                                <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                    <lightning-button variant="brand" type="submit" label="Save">
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </lightning-card>
+        </template>
+    </lightning-card>
+</template>

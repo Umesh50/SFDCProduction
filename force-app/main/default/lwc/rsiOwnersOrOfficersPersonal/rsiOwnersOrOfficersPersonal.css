@@ -1,0 +1,7 @@
+.hideLine {
+    display: none;
+}
+
+.showLine {
+    display: unset;
+}

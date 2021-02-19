@@ -1,0 +1,4 @@
+.slds-form-element__label {
+    font-weight:bold;
+   font-size: var(--lwc-fontSize3,0.8125rem);
+}

@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Please Sign Below" icon-name="custom:custom30">
+        <div class="c-container">
+            <div style="text-align: center; ">
+                <p class="slds-var-m-bottom_small">
+                    <canvas name="canvasItem" style="border:2px solid rgb(136, 135, 135); background: transparent;"></canvas>
+                </p>
+                <p class="slds-var-m-bottom_small">
+                    <lightning-button variant="brand" label="Save" title="Save" onclick={handleSaveClick} class="slds-var-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="Clear" title="Clear" onclick={handleClearClick} class="slds-var-m-left_x-small"></lightning-button>
+                </p>
+            </div>
+        </div>
+    </lightning-card>
+</template>

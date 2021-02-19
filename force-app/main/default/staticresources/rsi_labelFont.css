@@ -1,0 +1,10 @@
+.slds-form-element_horizontal .slds-form-element__label, .slds-form_horizontal .slds-form-element .slds-form-element__label, .slds-form_stacked .slds-form-element_horizontal .slds-form-element__label {
+    float: left;
+    max-width: calc(33% - var(--lwc-squareIconUtilityMedium,1.25rem));
+    flex-basis: calc(33% - var(--lwc-squareIconUtilityMedium,1.25rem));
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+    font-weight:bold;
+   font-size: var(--lwc-fontSize3,0.8125rem);
+}

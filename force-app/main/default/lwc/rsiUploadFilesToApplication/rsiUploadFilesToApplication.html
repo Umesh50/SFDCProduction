@@ -1,0 +1,85 @@
+<!--
+  @description       :
+  @author            : Tanmay Jain
+  @group             :
+  @last modified on  : 12-04-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-04-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <c-rsi-application-status record-id={recordId}></c-rsi-application-status>
+    <lightning-card icon-name="standard:product_consumed" title="Upload Documents">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="4" padding="around-small">
+                <p><b>Select Document Types to upload</b></p>
+                <template for:each={docTypeToStatus} for:item="keyVal">
+                    <div key={keyVal.key} style="padding: 5px;padding-left: 15px;">
+                        <lightning-layout>
+                            <lightning-layout-item size="10">
+                                <lightning-input label={keyVal.key} checked={keyVal.value} required={keyVal.req}
+                                    disabled={keyVal.req} onchange={addRemoveUploads} type="checkbox"></lightning-input>
+                            </lightning-layout-item>
+                            <!-- <lightning-layout-item size="1">
+                                <lightning-icon icon-name={keyVal.iconName} size="xx-small" title={keyVal.iconTitle}
+                                    variant={keyVal.iconVariant}></lightning-icon>
+                            </lightning-layout-item> -->
+                        </lightning-layout>
+                    </div>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="8" padding="around-small">
+                <div if:true={nochecks}>
+                    Select files to upload on the left
+                </div>
+                <template for:each={selOptions} for:item="opt">
+                    <div key={opt}>
+                        <div class="slds-grid slds-p-top_small">
+                            <div class="slds-col slds-size_2-of-8" style="align-self: center;font-size: 12px;">
+                                {opt}
+                            </div>
+                            <div class="slds-col slds-size_3-of-8">
+                                <lightning-file-upload label="" name={opt} accept={acceptedFormats} record-id={recordId}
+                                    onuploadfinished={handleUploadFinished} style="background: #027e46 !important;
+                                    color: white !important;"></lightning-file-upload>
+                            </div>
+                            <div class="slds-col slds-size_3-of-8" style="align-self:center">
+                                &nbsp;
+                                <c-rsi-doc-type-status currentrecordid={recordId} doctypetostatus={docTypeToStatus}
+                                    seloption={opt}>
+                                </c-rsi-doc-type-status>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                <br />
+                <div if:true={anyUploads}>
+                    <table class="slds-table slds-table--bordered">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Extension</th>
+                                <th>Document Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={fileData} for:item="f">
+                                <tr key={f.Id}>
+                                    <td>
+                                        <lightning-button data-id={f.Id} label={f.Title} variant="base" value={f.Id}
+                                            onclick={openFile}></lightning-button>
+                                    </td>
+                                    <td>{f.FileType}</td>
+                                    <td>{f.LatestPublishedVersion.Document_Type__c}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

@@ -1,0 +1,57 @@
+.THIS .iconClass{
+    background-color: #75a6a5 !important;
+}
+
+.iconClass{
+    background-color: #75a6a5 !important;
+}
+
+.slds-icon{
+    fill : #75a6a5 !important;
+}
+
+.slds-icon{
+    background-color: #75a6a5 !important;
+}
+
+.THIS .lightning-icon.slds-icon-standard-record-create.slds-icon_container {
+    background-color: #75a6a5 !important;
+}
+
+.THIS .svg{
+    background-color: #75a6a5 !important;
+}
+
+.THIS .slds-input{
+    background-color: #75a6a5 !important;
+}
+
+.contentClass{
+    color:green;
+    font-weight: bold;
+}
+
+.lightning-icon.slds-icon-standard-slider.slds-icon_container{
+    background-color: #75a6a5 !important;
+}
+
+.myColor{
+    background-color: #75a6a5 !important;
+}
+.iconContainer{
+    width : 50px;
+    height:50px;
+    display:inline-block;
+}
+
+.THIS .slds-form-element__label{
+    font-weight: bold !important;
+}
+
+lightning-input label {
+    font-weight: bold;
+}
+
+.slds-form-element__label{
+    font-weight: bold !important;
+}

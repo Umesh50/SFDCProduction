@@ -1,0 +1,146 @@
+<!--
+  @description       :
+  @author            : Tanmay Jain
+  @group             :
+  @last modified on  : 12-15-2020
+  @last modified by  : Umesh Kumar
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   12-15-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <div style="padding: 10px;">
+        <lightning-record-edit-form object-api-name="Owners_Or_Officers__c" record-id={recordId} class="slds-scrollable_y" onsuccess={handleSuccess} onsubmit={runChecks}>
+            <lightning-messages></lightning-messages>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="6" class={typeClass}>
+                    <lightning-input-field  field-name="Owner_Type__c" value={ownerType} onchange={ownerTypeToggle} ></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" style="display: none;">
+                    <lightning-input-field field-name="Application__c" value={opptyId}></lightning-input-field>
+                    <lightning-input-field field-name="Primary_Owner_Or_Officer__c" value={recNumOne} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" if:true={personalEntry}>
+                    <lightning-layout multiple-rows>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Responsible_Party__c" disabled={status} value={personalEntry} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6"></lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field field-name="Personal_Guarantee__c" value={personalEntry} disabled={disablePersonalCheck} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6"></lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                                <lightning-input-field  field-name="Ownership_Percentage__c" required onchange={percentChanges} class={percentError} disabled={status} ></lightning-input-field>
+                                <div if:true={errorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{errorText}</div>
+                        </lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Principal_Title__c" required disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="First_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Middle_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Last_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="DOBText__c" date-style="short" disabled={status} required onchange={handleDOB} class={dobError}></lightning-input-field>
+                            <div if:true={dobErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{dobErrorText}</div>
+                        </lightning-layout-item>
+                
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Country__c" value="USA" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="State_Province__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Residential_Address__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="City__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Zip_Code__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  field-name="Email__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                       
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="Country_of_Citizenship" field-name="Country_of_Citizenship_1__c" value="USA" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="Home_Phone" field-name="Home_Phone__c" required disabled={status} onchange={handlePhone} class={phoneError}></lightning-input-field>
+                            <div if:true={phoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{phoneErrorText}</div>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="ID_Type" field-name="ID_Type__c" value="SSN" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6"></lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="ID_Number" field-name="ID_Number__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                         </lightning-layout-item>
+                        <lightning-layout-item size="6"></lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" if:true={businessEntry}>
+                    <lightning-layout multiple-rows>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="ownpercent" field-name="Ownership_Percentage__c" required onchange={percentChanges} class={percentError} disabled={status} ></lightning-input-field>
+                            <div if:true={errorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{errorText}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6"></lightning-layout-item>
+                        <lightning-layout-item size="12">
+                            <br/>
+                            <p style="font-weight: 900;">Intermediary Contact Information:</p>
+                            <br/>
+                            
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="bname" field-name="Business_Name__c" required disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  id="icname" field-name="Intermediary_Contact_Name__c" required disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field id="icnumber" field-name="Intermediary_Contact_Number__c" required disabled={status} onchange={handlePhoneValidation} class={ibphoneError}></lightning-input-field>
+                            <div if:true={ibphoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{ibphoneErrorText}</div>
+                        </lightning-layout-item>
+                        
+                        <lightning-layout-item size="6">
+                            <lightning-input-field  id="icemail" field-name="Intermediary_Contact_Email__c" required disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div style="text-align: right;">
+                <lightning-button class="slds-m-top_small" variant="success" name="add" label="Add" icon-name="utility:add" onclick={addOwner} if:true={lastrow} disabled={status}></lightning-button>&nbsp;&nbsp;
+                <lightning-button class="slds-m-top_small" variant="destructive" name="delete" label="Delete" icon-name="utility:delete" onclick={deleteRec} disabled={status}></lightning-button>&nbsp;&nbsp;
+                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}></lightning-button>
+            </div>
+    </lightning-record-edit-form>
+    </div>
+</template>

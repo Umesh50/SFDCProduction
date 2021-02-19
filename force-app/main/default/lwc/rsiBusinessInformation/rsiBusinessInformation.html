@@ -1,0 +1,312 @@
+<!--
+  @description       :
+  @author            :Ajay Kumar
+  @group             :
+  @last modified on  : 11-11-2020
+  @last modified by  :Ajay Kumar
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-11-2020   Ajay kumar   Initial Version
+-->
+
+<template>
+    
+    <lightning-card >
+                  
+                    <div class="slds-card__body">
+                        <slot>
+                          <div style="padding: 10px;">
+                            <lightning-record-edit-form object-api-name="Opportunity" onsubmit={handleSubmit} record-id={recordId}  onsuccess={handleSuccessTost} onerror={handleError} class="slds-scrollable_y" >
+                              <lightning-messages></lightning-messages>
+                               
+                                  
+                                  <lightning-card title="Business Information" icon-name="standard:store" variant="Narrow">  </lightning-card>
+                                  
+                                  <lightning-layout multiple-rows="true" size="12">
+                                    <lightning-layout-item padding="around-small" size="4">
+                                        <lightning-input-field id="btype" field-name="Business_Type__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>                                                              
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">
+                                            <lightning-input-field id="llcclass" field-name="LLC_Class__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>                                    
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="4">                              
+                                        <lightning-input-field id="boes" field-name="Beneficial_Owner_Exemption_Status__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>  
+                                </lightning-layout-item>
+                                </lightning-layout>
+                                
+                          <lightning-layout multiple-rows="true" size="12">
+                            <lightning-layout-item padding="around-small" size="6">                              
+                                    <lightning-input-field field-name="DBA_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>  
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small" size="6">
+                                <lightning-input-field field-name="Legal_Name_As_DBA__c" onchange={handleLegalName} disabled={status}></lightning-input-field>
+                            </lightning-layout-item> 
+                         </lightning-layout>
+                         <lightning-layout multiple-rows="true" size="12">
+                          <lightning-layout-item padding="around-small" size="6">                              
+                                  <lightning-input-field field-name="Corporate_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>  
+                          </lightning-layout-item>
+                          <lightning-layout-item  padding="around-small" size="6">
+                            <lightning-input-field field-name="Employer_Identification_Number__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                          </lightning-layout>
+                         <lightning-layout multiple-rows="true" size="12">
+                          <lightning-layout-item padding="around-small" size="6">
+                                  <lightning-input-field field-name="DBA_Phone__c" disabled={status}  onchange={handleDBAPhoneValidation} class={dBAPhoneError}></lightning-input-field>      
+                                  <div if:true={dBAPhoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{dBAPhoneErrorText}</div>
+                                </lightning-layout-item>
+                          <lightning-layout-item padding="around-small" size="6">
+                                  <lightning-input-field id="dbafax" field-name="DBA_Fax__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>    
+                          </lightning-layout-item>
+                      </lightning-layout>
+                             
+                 
+                    <lightning-layout multiple-rows="true" size="12">
+                        <lightning-layout-item padding="around-small" size="6">
+                            <lightning-input-field field-name="Email_Address__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                    <lightning-layout-item  padding="around-small" size="6" >
+                        <lightning-input-field id="mphone" field-name="Mobile_Phone__c"  disabled={status} onchange={handleMobPhoneValidation} class={mobPhoneError}></lightning-input-field>
+                        <div if:true={mobPhoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{mobPhoneErrorText}</div>
+                            
+                    </lightning-layout-item>
+                </lightning-layout>  
+                    <lightning-layout multiple-rows="true" size="12">
+                        <lightning-layout-item  padding="around-small" size="6">
+                            <lightning-input-field field-name="Year_Established__c"  onchange={yearBetween} disabled={status}></lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item  padding="around-small" size="6">
+                            <lightning-input-field field-name="Current_Ownership_Years__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <lightning-layout multiple-rows="true" size="12">
+                      
+                      <lightning-layout-item  padding="around-small" size="6">
+                          <lightning-input-field field-name="Current_Ownership_Months__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                      </lightning-layout-item>
+                      <lightning-layout-item  padding="around-small" size="6">
+                        <lightning-input-field field-name="Country_Of_Primary_Business_Operations__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>
+                  </lightning-layout>    
+                  
+
+
+                 <div style="text-align: right;">
+                                  <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}></lightning-button>
+                                </div>
+      </lightning-record-edit-form>
+
+                               
+                          </div>
+                        </slot>
+                    </div>
+
+                    
+                </lightning-card>
+    
+
+    <div class="slds-border_top"></div>
+    
+        
+    <lightning-record-edit-form object-api-name="Opportunity" record-id={recordId} onsuccess={handleSuccessTost} >
+      <lightning-messages> </lightning-messages>
+      <lightning-card title="Address Information" icon-name="custom:custom106" variant="Narrow">  
+
+<lightning-layout multiple-rows="true" size="12">
+      <lightning-layout-item padding="around-small" size="6">
+          <lightning-input-field field-name="DBA_Address_1__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+      </lightning-layout-item>
+      <lightning-layout-item padding="around-small" size="6">
+              <lightning-input-field id="dbadd2" field-name="DBA_Address_2__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>    
+      </lightning-layout-item>
+  </lightning-layout>                                
+
+      <lightning-layout multiple-rows="true" size="12">
+          <lightning-layout-item padding="around-small" size="6">  
+              <lightning-input-field field-name="Country__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+          </lightning-layout-item>
+          <lightning-layout-item padding="around-small" size="6">
+              <lightning-input-field field-name="State__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+          </lightning-layout-item>                       
+      </lightning-layout>
+      <lightning-layout multiple-rows="true" size="12">
+          <lightning-layout-item padding="around-small" size="6">
+              <lightning-input-field field-name="City__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+          </lightning-layout-item>
+          <lightning-layout-item padding="around-small" size="6">
+              <lightning-input-field field-name="Zip_Code__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+          </lightning-layout-item>
+      </lightning-layout>
+      <div style="text-align: right;">
+        <lightning-button class="slds-m-top_small" variant="success" name="add" label="Add" icon-name="utility:add" onclick={addAddress} disabled={addButtonDisabled}></lightning-button>&nbsp;&nbsp;
+        <lightning-button class="slds-m-top_small" variant="destructive" name="delete" label="Delete" icon-name="utility:delete" onclick={removeAddress} disabled={delteDiabled}></lightning-button>&nbsp;&nbsp;
+        <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+      </lightning-card  >
+</lightning-record-edit-form>
+
+    <lightning-card>
+  <lightning-layout >
+     
+    <lightning-layout-item padding="around-small" size="6">
+        <div if:true={isShippingToogle}>
+            <lightning-input type="toggle" label="Shipping Address" name="input1" onchange={displayShippingAddress} disabled={status}></lightning-input>
+        </div>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-small" size="6">
+        <div if:true={isMaiilingToogle}>
+            <lightning-input type="toggle" label="Mailing Address" name="input2" onchange={displayMailingAddress} disabled={status}></lightning-input>
+        </div>
+    </lightning-layout-item>
+   
+  </lightning-layout>
+
+    <lightning-record-edit-form object-api-name="Account"  record-id={accountId} onsuccess={handleSuccessTost} onload={handleOnLoad}>
+      <div if:true={isShippingAddress}>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Shipping_Address__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Shipping_Country__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Shipping_State__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Shipping_City__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Shipping_Zip__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Shipping_Phone__c"  disabled={status} onchange={handleShippingPhoneValidation} class={shipPhoneError}></lightning-input-field>
+                    <div if:true={shipPhoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{shipPhoneErrorText}</div>
+                        
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Address_Type__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                
+            </lightning-layout>
+        </div>
+        <div if:true={isMaiilingAddress}>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Mailing_Address__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Mailing_Country__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+                <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Mailing_State__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Mailing_City__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Mailing_Zip__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Mailing_Phone__c"  disabled={status} onchange={handleMailingPhoneValidation} class={mailPhoneError}></lightning-input-field>
+                    <div if:true={mailPhoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{mailPhoneErrorText}</div>
+                        
+                </lightning-layout-item>
+                
+            </lightning-layout>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                    <lightning-input-field field-name="Address_Type2__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                </lightning-layout-item>
+                
+            </lightning-layout>
+        </div>
+        <div if:true={condition} style="text-align: right;">
+            <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>  
+             
+    </lightning-record-edit-form>
+</lightning-card>
+
+
+<div class="slds-border_top"></div>
+<lightning-record-edit-form  object-api-name="Account" record-id={accountId} onsuccess={handleSuccessTost} >
+    <lightning-messages> </lightning-messages>
+                <lightning-card title="Business Bank Account" icon-name="custom:custom16" variant="Narrow">
+                <lightning-layout multiple-rows="true" size="12" title="Business Bank Account">
+                    <lightning-layout-item padding="around-small" size="6"> 
+                        <lightning-input-field field-name="ABA_RoutingLookup2__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6"> 
+                        <lightning-input-field field-name="DDA_Account__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                     </lightning-layout-item>
+               
+                </lightning-layout>
+                <lightning-layout multiple-rows="true" size="12">
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-output-field field-name="BANK_NAME__c"  disabled={status} onchange={handlewithoutSave}></lightning-output-field>
+                        {BANK_NAME__c}
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input-field field-name="DDA_Account2_No__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>                      
+                
+                
+                </lightning-layout>
+               
+                <lightning-layout-item  padding="around-small" size="6">
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+        
+                    <lightning-button class="slds-float_right" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}>
+                </lightning-button>&nbsp;&nbsp;
+            </div>
+        </div>
+                </lightning-layout-item>
+            
+
+            </lightning-card>
+        </lightning-record-edit-form>
+<template if:true={openmodel}>
+  <div class="demo-only" style="height: 640px;">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+              <lightning-record-edit-form record-id={recordId} object-api-name="Opportunity" onsuccess={handleSuccess} >
+                  <lightning-messages> </lightning-messages> 
+                  <lightning-card title="Legal Verfication" icon-name="standard:shift_template" variant="Narrow">  
+                      <div slot="footer" style="text-align: left;"> 
+                          <lightning-layout multiple-rows="true" size="12">           
+                                  <lightning-input-field field-name="Verification_Method__c" variant="label-inline" disabled={status} onchange={handlewithoutSave}></lightning-input-field>                                                                     
+                          </lightning-layout>
+                          <h1>Evidence of Legal Status</h1>
+                          <div class="slds-border_top"></div>
+                          <lightning-layout multiple-rows="true" size="12">
+                                  <lightning-input-field field-name="Evidence_of_Legal_Status__c"  variant="label-inline" disabled={status} onchange={handlewithoutSave}></lightning-input-field>                                
+                          </lightning-layout>
+                          <div class="slds-clearfix">
+                              <div class="slds-align_absolute-center">
+                                  <lightning-button variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}></lightning-button>
+                              </div>
+                          </div>
+                      </div>
+                  </lightning-card>
+              </lightning-record-edit-form>
+          </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+  </template>
+
+
+    
+</template>

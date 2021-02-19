@@ -1,0 +1,488 @@
+<template>
+    <lightning-card icon-name="standard:account" title="Volume Details">
+        <!--div style="height:auto ;">
+            <lightning-datatable
+                    key-field="id"
+                    data={volumeList}
+                    columns={column}
+                    column-widths-mode="auto"
+                    onrowaction={handleRowAction}
+                    hide-checkbox-column="hidden">
+            </lightning-datatable> 
+        </div-->    
+         <!-- second  table -->
+<div id="containerDiv" onmousemove={handlemousemove} onmouseup={handlemouseup} ondblclick={handledblclickresizable}
+class="slds-table_header-fixed_container slds-border_right slds-border_left tableScroll"
+onscroll={tableOuterDivScrolled}  style="height: auto;">
+<div id="tableViewInnerDiv" onscroll={tableScrolled} class="slds-scrollable_y tableViewInnerDiv">
+
+   <table
+          class="slds-table slds-table_bordered slds-table_header-fixed slds-table_resizable-cols slds-table_fixed-layout">
+       <thead>
+           <tr>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="MID">
+                   <div class="slds-cell-fixed" style="width:10rem;">
+                       <a class="slds-th__action slds-text-link--reset ">
+                           <span class="slds-truncate">MID</span>
+                       </a>
+                       <div class="slds-resizable">
+                           <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                               <span class="slds-resizable__divider"></span>
+                           </span>
+                       </div>
+                   </div>
+               </th>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style= "width:15rem;" title="TIDNUM">
+                   <div class="slds-cell-fixed" style="width:15rem;">
+                       <a class="slds-th__action slds-text-link--reset ">
+                           <span class="slds-truncate">TIDNUM</span>
+                       </a>
+                       <div class="slds-resizable">
+                           <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                               <span class="slds-resizable__divider"></span>
+                           </span>
+                       </div>
+                   </div>
+               </th>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="DATECREATED">
+                   <div class="slds-cell-fixed" style="width:10rem;">
+                       <a class="slds-th__action slds-text-link--reset ">
+                           <span class="slds-truncate">DATECREATED</span>
+                       </a>
+                       <div class="slds-resizable">
+                           <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                               <span class="slds-resizable__divider"></span>
+                           </span>
+                       </div>
+                   </div>
+               </th>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TOTALNETAMT">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">TOTALNETAMT</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TOTALTRANSNUM">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">TOTALTRANSNUM</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="BATCHNUM">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">BATCHNUM</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="AMTPURCHASE">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">AMTPURCHASE</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="NUMPURCHASE">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">NUMPURCHASE</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="AMTRETURN">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">AMTRETURN</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="NUMRETURN">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">NUMRETURN</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="APPLICATIONNO">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">APPLICATIONNO</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="MERCHANTBATCHNO">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">MERCHANTBATCHNO</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="AVERAGETICKET">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">AVERAGETICKET</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:5rem;" title="ROW">
+                <div class="slds-cell-fixed" style="width:5rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">ROW</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+               <!--th scope="col">
+                   <div class="slds-cell-fixed">
+                         
+                   </div>
+               </th-->
+           </tr>
+       </thead>
+       <tbody>
+        <template for:each={volumeList} for:item="d">
+           <tr key={d.Id}>
+               <td>
+                   <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.MID__c}</div>
+               </td>
+               <td>
+                   <div class="slds-truncate dv-dynamic-width" style="width:15rem;">{d.TIDNUM__c}</div>
+               </td>
+               <td>
+                   <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.DATECREATED__c}</div>
+               </td>
+               <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.TOTALNETAMT__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:15rem;">{d.TOTALTRANSNUM__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.BATCHNUM__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.AMTPURCHASE__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.NUMPURCHASE__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.AMTRETURN__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.NUMRETURN__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.APPLICATIONNO__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;"><a data-value={d.MERCHANTBATCHNO__c} onclick={AuditcardBUtton}>{d.MERCHANTBATCHNO__c}</a></div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{d.AVERAGETICKET__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:5rem;">{d.ROW__c}</div>
+            </td>
+           </tr>
+     </template>
+    </tbody>
+   </table>
+  </div>
+  </div>
+  <br>
+  <!--c-rsi-transaction-data batch-no={batchNo}></c-rsi-transaction-data-->
+</lightning-card>
+
+
+ <!-- second  Transaction table-->
+
+
+<div if:false={refreshView}>
+<lightning-card icon-name="standard:account" title="Transaction Details">
+    <div style="height:auto ;" >
+        <lightning-datatable
+                key-field="id"
+                data={transList}
+                columns={columnsTrans}
+                column-widths-mode="auto"
+                hide-checkbox-column="hidden">
+        </lightning-datatable> 
+    </div> 
+    
+    <!-- second  Transaction table-->
+<!--
+    <div id="containerDiv1" onmousemove={handlemousemove1} onmouseup={handlemouseup1} ondblclick={handledblclickresizable1}
+class="slds-table_header-fixed_container slds-border_right slds-border_left tableScroll"
+onscroll={tableOuterDivScrolled1}  style="height: auto;">
+<div id="tableViewInnerDiv1" onscroll={tableScrolled} class="slds-scrollable_y tableViewInnerDiv">
+
+   <table
+          class="slds-table slds-table_bordered slds-table_header-fixed slds-table_resizable-cols slds-table_fixed-layout">
+       <thead>
+           <tr>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TOTALNETAMT">
+                   <div class="slds-cell-fixed" style="width:10rem;">
+                       <a class="slds-th__action slds-text-link--reset ">
+                           <span class="slds-truncate">TOTALNETAMT</span>
+                       </a>
+                       <div class="slds-resizable">
+                           <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                               <span class="slds-resizable__divider"></span>
+                           </span>
+                       </div>
+                   </div>
+               </th>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style= "width:15rem;" title="DATECREATED">
+                   <div class="slds-cell-fixed" style="width:15rem;">
+                       <a class="slds-th__action slds-text-link--reset ">
+                           <span class="slds-truncate">DATECREATED</span>
+                       </a>
+                       <div class="slds-resizable">
+                           <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                               <span class="slds-resizable__divider"></span>
+                           </span>
+                       </div>
+                   </div>
+               </th>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="BATCHNUM">
+                   <div class="slds-cell-fixed" style="width:10rem;">
+                       <a class="slds-th__action slds-text-link--reset ">
+                           <span class="slds-truncate">BATCHNUM</span>
+                       </a>
+                       <div class="slds-resizable">
+                           <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                               <span class="slds-resizable__divider"></span>
+                           </span>
+                       </div>
+                   </div>
+               </th>
+               <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="CARDTYPE">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">CARDTYPE</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="SECNUM">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">SECNUM</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TRANSDATE">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">TRANSDATE</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TRANSAMT1">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">TRANSAMT1</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TRANSAMT1">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">TRANSAMT1</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="CARDTYPEID">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">CARDTYPEID</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="CARDIDMETHOD">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">CARDIDMETHOD</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="VOIDINDICATOR">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">VOIDINDICATOR</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="TRANSCODE">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">TRANSCODE</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+            <th class="slds-is-resizable dv-dynamic-width" scope="col" style="width:10rem;" title="AUTHAMOUNT">
+                <div class="slds-cell-fixed" style="width:10rem;">
+                    <a class="slds-th__action slds-text-link--reset ">
+                        <span class="slds-truncate">AUTHAMOUNT</span>
+                    </a>
+                    <div class="slds-resizable">
+                        <span class="slds-resizable__handle" onmousedown={handlemousedown1}>
+                            <span class="slds-resizable__divider"></span>
+                        </span>
+                    </div>
+                </div>
+            </th>
+           </tr>
+       </thead>
+       <tbody>
+        <template for:each={transList} for:item="t">
+           <tr key={t.Id}>
+               <td>
+                   <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.TOTALNETAMT__c}</div>
+               </td>
+               <td>
+                   <div class="slds-truncate dv-dynamic-width" style="width:15rem;">{t.DATECREATED__c}</div>
+               </td>
+               <td>
+                   <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.BATCHNUM__c}</div>
+               </td>
+               <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.CARDTYPE__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:15rem;">{t.SECNUM__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.TRANSDATE__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.TRANSAMT1__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.TRANSAMT2__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.CARDTYPEID__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.CARDIDMETHOD__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.VOIDINDICATOR__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:10rem;">{t.TRANSCODE__c}</div>
+            </td>
+            <td>
+                <div class="slds-truncate dv-dynamic-width" style="width:5rem;">{t.AUTHAMOUNT__c}</div>
+            </td>
+           </tr>
+     </template>
+    </tbody>
+   </table>
+  </div>
+  </div> -->
+</lightning-card>
+</div>
+</template>

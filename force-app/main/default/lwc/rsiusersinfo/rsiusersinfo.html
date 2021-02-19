@@ -1,0 +1,32 @@
+<template>
+    <lightning-layout multiple-rows="true" size="12">
+    <lightning-layout-item padding="around-small" size="4">
+        <b><span>REP’S NAME :</span>&nbsp;</b>
+       <b> <span>{name}</span></b>
+    </lightning-layout-item>
+    
+    
+    <lightning-layout-item padding="around-small" size="4">
+        <b><span>REP ID :</span>&nbsp;
+        <span>{salesTeamNo}</span></b>
+    </lightning-layout-item>
+   
+    <lightning-layout-item padding="around-small" size="4">
+        <b><span>DATE :</span>&nbsp;
+        
+        <span>{CloseDate} </span></b>
+    </lightning-layout-item>
+    </lightning-layout>
+    
+    <div class="slds-border_top"></div>
+    <lightning-layout multiple-rows="true" size="12">
+    <lightning-layout-item padding="around-small" size="4">
+        <b><span>REP PHONE # : </span>&nbsp;
+        <span>{phone}</span></b>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-small" size="4">
+       <b> <span>REP EMAIL : </span>&nbsp;
+        <span>{email}</span></b>
+    </lightning-layout-item>
+</lightning-layout>
+</template>

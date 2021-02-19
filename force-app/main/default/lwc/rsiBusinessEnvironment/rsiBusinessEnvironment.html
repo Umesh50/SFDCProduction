@@ -1,0 +1,159 @@
+<template>
+    
+ 
+<lightning-layout >
+        <div class="slds-m-top_medium"></div>
+    </lightning-layout>
+    <lightning-record-edit-form object-api-name="Account" record-id={accountId} onsuccess={handleSuccess} class="slds-scrollable_y" onload={handleOnLoad}>
+        <lightning-messages> </lightning-messages> 
+        <lightning-card title="Business Environment" icon-name="standard:metrics" variant="Narrow">     
+        <div slot="footer" style="text-align: left;">      
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input-field field-name="Previous_Processor_Name__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>                                     
+                </lightning-layout-item>
+            </lightning-layout> 
+                <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6"> 
+                        <lightning-input-field field-name="Industry_MCC_Code__c" onchange={handleDataUpdate} disabled={status}></lightning-input-field>                                     
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">                               
+                    <lightning-input-field field-name="Copy_Industry_Standards__c" disabled={status} onchange={handleDataUpdate1}></lightning-input-field>       
+            </lightning-layout-item>
+            </lightning-layout> 
+			<lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">                               
+                        <lightning-input-field field-name="Total_Monthly_Sales__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>   
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6">                               
+                    <lightning-input-field field-name="Average_Ticket__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>       
+            </lightning-layout-item>
+                
+            </lightning-layout> 
+            <lightning-layout multiple-rows="true" size="12">
+                
+                <lightning-layout-item padding="around-small" size="6">                               
+                    <lightning-input-field field-name="Highest_Ticket_Amount__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>   
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="6">   
+                <lightning-input-field field-name="Highest_Ticket_Frequency__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>  
+        </lightning-layout-item>
+                
+            </lightning-layout> 
+            <lightning-layout multiple-rows="true" size="12">
+                
+                <lightning-layout-item padding="around-small" size="6">                               
+                    <lightning-input-field field-name="Annual_Revenue__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>   
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="6">   
+                <lightning-input-field field-name="Pricing_Plans__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>  
+        </lightning-layout-item>
+                
+            </lightning-layout>
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6">
+                        <lightning-input-field field-name="Description_Of_Products_Or_Services__c" disabled={status} onchange={handleProDescValidation} class={nameError}></lightning-input-field>       
+                        <div if:true={nameErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{nameErrorText}</div>
+                    </lightning-layout-item>
+                
+            </lightning-layout>  
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6"> 
+                        <lightning-input-field field-name="Describe_When_Product_Is_Received__c" onchange={handleDataRecieved} disabled={status}></lightning-input-field>       
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6"> 
+                    <lightning-input-field field-name="No_of_Days__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>     
+            </lightning-layout-item>
+            </lightning-layout> 
+            
+                   
+            
+            
+            <div>  
+                <lightning-layout multiple-rows="true" size="12">
+                    <lightning-layout-item padding="around-small" size="6"> 
+                        <lightning-input-field field-name="Seasonal__c" onchange={handleSesonalChange} disabled={status}></lightning-input-field>
+                    </lightning-layout-item>
+                </lightning-layout> 
+                      
+                <template if:true={areDetailsVisible}>
+                <lightning-layout  size="12">
+                    <lightning-layout-item  size="3" > 
+                        <lightning-input-field field-name="January__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item  size="3"> 
+                        <lightning-input-field field-name="February__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item  size="3"> 
+                        <lightning-input-field field-name="March__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item  size="3"> 
+                        <lightning-input-field field-name="April__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                    </lightning-layout-item>
+                    
+                </lightning-layout>
+                <lightning-layout  size="12">
+                    <lightning-layout-item  size="3" > 
+                                            <lightning-input-field field-name="May__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item  size="3"> 
+                                            <lightning-input-field field-name="June__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item  size="3"> 
+                                            <lightning-input-field field-name="July__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item  size="3"> 
+                                            <lightning-input-field field-name="August__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        </lightning-layout>
+                                        <lightning-layout  size="12">
+                                        <lightning-layout-item  size="3" > 
+                                            <lightning-input-field field-name="September__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item  size="3"> 
+                                            <lightning-input-field field-name="October__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item  size="3"> 
+                                            <lightning-input-field field-name="November__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item  size="3"> 
+                                            <lightning-input-field field-name="December__c"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                        </lightning-layout-item>
+                                        </lightning-layout>
+                                        
+                                        
+            </template> 
+            
+            <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6"> 
+                    <lightning-input-field field-name="Website" disabled={status} onchange={handlewithoutSave}></lightning-input-field> 
+                </lightning-layout-item>
+            </lightning-layout>
+                <lightning-layout multiple-rows="true" size="12">
+                <lightning-layout-item padding="around-small" size="6"> 
+                    <lightning-input-field field-name="Customer_Service_Phone__c" disabled={status} onchange={handlePhoneValidation} class={phoneError}></lightning-input-field>     
+                    <div if:true={phoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{phoneErrorText}</div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="6"> 
+                        <lightning-input-field field-name="Contact_Us_Email__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>     
+                </lightning-layout-item>
+            </lightning-layout>   
+                
+                
+               
+                
+        
+                    <lightning-button class="slds-float_right" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}>
+                </lightning-button>&nbsp;&nbsp;
+           
+               
+            
+            </div>             
+        </div>     
+          
+    </lightning-card>
+</lightning-record-edit-form>
+
+   
+
+</template>

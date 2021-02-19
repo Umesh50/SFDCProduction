@@ -1,0 +1,60 @@
+<!--
+  @description       :
+  @author            : Tanmay Jain
+  @group             :
+  @last modified on  : 11-13-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-07-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <div class="customCard" style="background: white;" if:false={loadDone}>
+        <lightning-spinner size="large"></lightning-spinner>
+    </div>
+    <div class="customCard" style="background: white;" if:true={loadDone}>
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure"><lightning-icon icon-name="standard:employee_contact" class={iconClass}></lightning-icon></div>
+                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="slds-text-heading_small slds-truncate textDecoration">Owners Or Officers</span></h2></div>
+                <div class="slds-no-flex" if:true={showError}>
+                    <slot name="actions" style="color: red;font-weight: bold;">
+                        <lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{errorText}
+                    </slot>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body">
+            <slot>
+                <template for:each={owners} for:item="rec">
+                    <div key={rec.Id}><br/></div>
+                    <div class="customCard" key={rec.Id}>
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="slds-text-heading_small slds-truncate textDecoration">Owner # {rec.ownerNum}</span></h2></div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body">
+                            <slot>
+                                <c-rsi-owners-or-officers-personal
+                                oppty-id={recordId}
+                                record-id={rec.Id}
+                                read-status-only={readStatusOnly}
+                                rec-num-one={rec.recNumOne}
+                                owner-type={rec.ownerType}
+                                lastrow={rec.lastrow}
+                                all-owners={owners}
+                                sole-prop={soleProp}
+                                onrecordsaved={recordSaved}
+                                onaddowner={addOwner}
+                                onfivescreensave ={handlescreenfivesave}
+                                >
+                                </c-rsi-owners-or-officers-personal>
+                            </slot>
+                        </div>
+                    </div>
+                </template>
+            </slot>
+        </div>
+    </div>
+</template>

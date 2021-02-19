@@ -1,0 +1,665 @@
+<template>
+    <lightning-card>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+            </lightning-spinner>
+        </template>
+        <div style="border-bottom: 1px solid #dddbda;" class="slds-p-bottom_medium">
+            <lightning-card title="Equipment Detail" icon-name="standard:record_create">
+                <div class="slds-grid slds-wrap slds-form">
+                    <div class="slds-size_1-of-1 slds-p-top_x-small">
+                        <div class="slds-text-body_regular slds-p-left_medium">
+                            <b>
+                                Sales Percent Types
+                            </b>
+                            <lightning-helptext class="slds-p-left_xx-small"
+                                content="Total percentage between all types of sales must equal 100%">
+                            </lightning-helptext>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_medium">
+                        <lightning-input label="" name='Card_Present' type='number' onchange={changeHandler}
+                            value={Card_Present} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_medium">
+                        <lightning-input label="" name='Card_Not_Present' type='number' onchange={changeHandler}
+                            value={Card_Not_Present} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_medium">
+                        <lightning-input label="" name='Internet' type='number' onchange={changeHandler}
+                            value={Internet} class="slds-p-right_medium" disabled={status}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-size_1-of-3 slds-p-left_large slds-p-top_xx-small" style="font-weight:bold;">
+                        Card Present %
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_large slds-p-top_xx-small" style="font-weight:bold;">
+                        Card Not Present %
+                    </div>
+                    <div class="slds-size_1-of-3 slds-p-left_large slds-p-top_xx-small" style="font-weight:bold;">
+                        Internet %
+                    </div>
+                    <div class="slds-size_1-of-1 slds-clearfix">
+                        <div class="slds-float_right slds-p-top_small slds-p-right_medium">
+                            <lightning-button class="slds-m-top_small" variant="brand" label="Save" title="Save"
+                                onclick={handleAccountSave} disabled={status}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+
+        <template if:true={isShowFirstSection}>
+            <lightning-card title="Equipment 1" icon-name="custom:custom19">
+                <div style="padding: 10px;" class="slds-p-top_medium">
+                    <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                        onsuccess={handleSuccess1} onsubmit={handleSubmit1} record-id={equipment1Id} id="Equipment11Id">
+                        <lightning-messages> </lightning-messages>
+                        <div class="slds-grid slds-wrap slds-form">
+                            <div class="slds-size_1-of-1" style="margin-top: -40px;">
+                                <div class="slds-float_right slds-p-right_medium">
+                                    <lightning-button-icon icon-name="utility:add" slot="actions" onclick={addRow}
+                                        class="slds-p-right_small" alternative-text="Add" disabled={status}>
+                                    </lightning-button-icon>
+                                    <lightning-button-icon icon-name="utility:dash" variant="brand"
+                                        onclick={removeRowFromParent} alternative-text="Delete"
+                                        data-item-id={equipment1Id} disabled={status}>
+                                    </lightning-button-icon>
+                                </div>
+                            </div>
+                            <!-- <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="Equipment_Type__c"
+                                    class="slds-form-element_stacked slds-hidden">
+                                </lightning-input-field>
+                            </div> -->
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Equipment__c" class="slds-form-element_stacked"
+                                    required="true" onchange={handleEquipmentChange} disabled={status}>
+                                </lightning-input-field>
+                            </div>
+                            <!-- value={defaultEquipment} -->
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Ownership_Type__c" class="slds-form-element_stacked"
+                                    onchange={handleOwnershipChange} disabled={status}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Quantity" class="slds-form-element_stacked"
+                                     disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-form-element_horizontalslds-p-left_xx-small slds-p-top_xx-small">
+                                <!-- <label for="fieldid" style="font-weight:bold;">{priceFieldName}</label> -->
+                                <lightning-input-field field-name="UnitPrice" class="slds-form-element_stacked"
+                                    required="true" value={Equipment1Price} disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                                <!--Equipment1Price-->
+                                <!-- <lightning-input-field field-name="UnitPrice" class="slds-form-element_stacked" 
+                                required="true" id="fieldid"  variant="label-hidden" value={Equipment1Price} disabled={status}>
+                            </lightning-input-field> -->
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small"
+                                style="padding-top: 28px;font-weight:bold;">
+                                {unitMonthString}
+                            </div>
+                            <template if:true={showPinpadSectionForE1}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="PINPAD__c" onchange={handlePinpadChange}
+                                        class="slds-form-element_stacked" value={isPinpadChecked} disabled={status}>
+                                    </lightning-input-field>
+                                </div>
+                            </template>
+
+                            <template if:true={showSimCardForE1}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="SIM_Card__c" class="slds-form-element_stacked"
+                                        onchange={handleSimCardChange} value={isSimCardChecked} disabled={status}>
+                                    </lightning-input-field>
+
+                                </div>
+                            </template>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="SEMI__c" class="slds-form-element_stacked"
+                                    disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <template if:false={showPinpadSectionForE1}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+
+                                </div>
+                            </template>
+                            <template if:false={showSimCardForE1}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+
+                                </div>
+                            </template>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="OpportunityId"
+                                    class="slds-form-element_stacked slds-hidden" value={opptyId} disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field value={equipmentProduct2Id} field-name="Product2Id"
+                                    class="slds-form-element_stacked slds-hidden" required="true" disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <template if:true={showPurchaseCheckboxes}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Bill_Merchant__c"
+                                        class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Bill_Partner__c"
+                                        class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+                            </template>
+                            <template if:true={showRentalCheckboxes}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Bill_Merchant__c"
+                                        class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Bill_Partner__c"
+                                        class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Merchant_Deductible__c"
+                                        class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Partner_Deductible__c"
+                                        class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+                            </template>
+                            <div class="slds-size_1-of-1 slds-clearfix">
+                                <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                    <lightning-button variant="brand" type="submit" label="Save" disabled={status}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </lightning-card>
+            <!-- <template if:true={isShowSecondSection}>
+                <lightning-card title="E-commerce Setup" icon-name="custom:custom19">
+                    <div style="padding: 10px;">
+                        <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                            onsuccess={handleSuccess} onsubmit={onSubmitHandler} record-id={equipment1Id}
+                            id="EcommerceSetup1">
+                            <lightning-messages> </lightning-messages>
+                            <div class="slds-grid slds-wrap slds-form">
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Gateway__c" class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Product_Website__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Contact_Us_Email__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-4 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Customer_Service_Phone_Number__c"
+                                        class="slds-form-element_stacked">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="OpportunityId"
+                                        class="slds-form-element_stacked slds-hidden" value={opptyId}>
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field value={internetProductId} field-name="Product2Id"
+                                        class="slds-form-element_stacked slds-hidden" required="true">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="Quantity" value={internetQuantity}
+                                        class="slds-form-element_stacked slds-hidden">
+                                    </lightning-input-field>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                    <lightning-input-field field-name="UnitPrice" value={internetPrice}
+                                        class="slds-form-element_stacked slds-hidden" required="true">
+                                    </lightning-input-field>
+                                </div>
+
+                                <div class="slds-size_1-of-1 slds-clearfix">
+                                    <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                        <lightning-button variant="brand" type="submit" label="Save">
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </lightning-card>
+            </template> -->
+        </template>
+
+        <template if:true={isShowSecondEquipmentSection}>
+            <lightning-card title={equipmentName} icon-name="custom:custom19">
+                <div style="padding: 10px;">
+                    <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                        onsuccess={handleSuccess2} onsubmit={handleSubmit2} record-id={equipment2Id} id="Equipment2Id">
+                        <lightning-messages> </lightning-messages>
+                        <div class="slds-grid slds-wrap slds-form">
+                            <!-- <div class="slds-size_1-of-1" style="margin-top: -40px;">
+                                <div class="slds-float_right slds-p-right_medium">
+                                    <lightning-button-icon icon-name="utility:add" slot="actions" onclick={addRow}
+                                        class="slds-p-right_small" alternative-text="Add">
+                                    </lightning-button-icon>
+                                    <lightning-button-icon icon-name="utility:dash" variant="brand"
+                                        onclick={removeRowFromParent} alternative-text="Delete"
+                                        data-item-id={equipment2Id}>
+                                    </lightning-button-icon>
+                                </div>
+                            </div> -->
+                            <!-- <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Equipment_Type__c" class="slds-form-element_stacked">
+                                </lightning-input-field>
+                            </div> -->
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Equipment__c" class="slds-form-element_stacked"
+                                    required="true" onchange={handleEquipment2Change} value={defaultEquipment2}
+                                    disabled="true">
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Ownership_Type__c" class="slds-form-element_stacked"
+                                    value={equipment1Ownership} disabled={status} onchange={priceHandleByOwnerShiptype}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Quantity" class="slds-form-element_stacked"
+                                    value={equipment1Quantity} disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="UnitPrice" class="slds-form-element_stacked"
+                                    required="true" value={equipment1UnitPrice} disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small"
+                                style="padding-top: 32px;font-weight:bold;">
+                                 {pinpadSimcardUnit}
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="OpportunityId"
+                                    class="slds-form-element_stacked slds-hidden" value={opptyId} disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field value={equipment2Product2Id} field-name="Product2Id"
+                                    class="slds-form-element_stacked slds-hidden" required="true" disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-size_1-of-1 slds-clearfix">
+                                <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                    <lightning-button variant="brand" type="submit" label="Save" disabled={status}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </lightning-card>
+        </template>
+
+        <template if:true={isShowThirdSection}>
+            <lightning-card title="E-commerce Setup" icon-name="custom:custom19">
+                <div style="padding: 10px;">
+                    <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy"
+                        onsuccess={handleSuccess3} onsubmit={onSubmitHandler} record-id={EcommerceSetupId}
+                        id="EcommerceSetup2">
+                        <lightning-messages> </lightning-messages>
+                        <div class="slds-grid slds-wrap slds-form">
+                            <!-- <div class="slds-size_1-of-1" style="margin-top: -40px;">
+                                <div class="slds-float_right slds-p-right_medium">
+                                    <lightning-button-icon icon-name="utility:add" slot="actions" onclick={addRow}
+                                        class="slds-p-right_small" alternative-text="Add">
+                                    </lightning-button-icon>
+                                    <lightning-button-icon icon-name="utility:dash" variant="brand"
+                                        onclick={removeRowFromParent} alternative-text="Delete"
+                                        data-item-id={EcommerceSetupId}>
+                                    </lightning-button-icon>
+                                </div>
+                            </div> -->
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="VAR_Service_Provider__c"
+                                    class="slds-form-element_stacked" onchange={handleVarServiceProviderChange}
+                                    disabled={status}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Product_Website__c" class="slds-form-element_stacked"
+                                    disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Contact_Us_Email__c"
+                                    class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-4 slds-p-right_xx-small slds-p-top_xx-small">
+                                <lightning-input-field field-name="Customer_Service_Phone_Number__c"
+                                 disabled={status}  onchange={handlePhoneValidation} class={phoneError}>
+                                </lightning-input-field>
+                                <div if:true={phoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{phoneErrorText}</div> 
+                            </div>
+
+                            <template if:true={showGatewayIdCheckboxes}>
+                                <div
+                                    class="slds-form-element slds-size_1-of-4 slds-p-right_xx-small slds-p-top_xx-small">
+                                    <lightning-input-field field-name="Gateway_ID__c" class="slds-form-element_stacked"
+                                        disabled={status} onchange={handlewithoutSave}>
+                                    </lightning-input-field>
+                                </div>
+                            </template>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="OpportunityId"
+                                    class="slds-form-element_stacked slds-hidden" value={opptyId} disabled={status}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field value={internetProductId} field-name="Product2Id"
+                                    class="slds-form-element_stacked slds-hidden" required="true" disabled={status}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="Quantity" value={internetQuantity}
+                                    class="slds-form-element_stacked slds-hidden" disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                                <lightning-input-field field-name="UnitPrice" value={internetPrice}
+                                    class="slds-form-element_stacked slds-hidden" required="true" disabled={status} onchange={handlewithoutSave}>
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-size_1-of-1 slds-clearfix">
+                                <div class="slds-float_right slds-p-right_medium" style="margin-top: -50px;">
+                                    <lightning-button variant="brand" type="submit" label="Save" disabled={status}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </lightning-card>
+        </template>
+
+        <template for:each={itemList} for:item="lineItem">
+            <div style="border-bottom: 1px solid #dddbda;" key={lineItem.index} class="slds-p-top_medium">
+                <lightning-card title={lineItem.eqCount} icon-name="custom:custom19" key={lineItem.index}>
+                    <c-line-item-edit-form oppty-id={opportunityId} record-id={lineItem.Id} onremoveitem={removeRow}
+                        onadditem={addRow} onshowsuccess={handleLineItemSuccess}
+                        equipment2-product2-id={equipment2Product2Id} product-map={productNameToIdMap}
+                        price-map={productNameToPriceMap} default-header={lineItem.eqCount}
+                        account-record={accountRecord} read-status-only={readStatusOnly} onsecondsave ={handleSaveFields}>
+                    </c-line-item-edit-form>
+                </lightning-card>
+            </div>
+        </template>
+    </lightning-card>
+
+    <div style="border-bottom: 1px solid #dddbda;" class="slds-p-bottom_medium">
+        <lightning-card title="EQUIPMENT PROGRAMMING" icon-name="standard:slider">
+            <div class="slds-grid slds-wrap slds-form">
+                <div class="slds-size_1-of-2 slds-p-top_medium slds-p-left_small">
+                    <lightning-combobox name="BUILD TYPE" label="BUILD TYPE" value={value} placeholder="BUILD TYPE"
+                        options={options} onchange={handleTypeChange} disabled={status}></lightning-combobox>
+                </div>
+                <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                </div>
+                <template if:true={showRetailSection}>
+
+                    <div class="slds-size_1-of-2 slds-p-top_medium slds-p-left_small" style="font-weight: bold;">
+                        RETAIL
+                    </div>
+                    <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-left_medium">
+                        <lightning-input type="checkbox" label="AUTO BATCH" name="AUTO_BATCH" onchange={changeHandler}
+                            checked={equipmentProgramming.AUTO_BATCH__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-form-element slds-form-element_horizontal slds-p-right_medium slds-p-top_medium slds-p-left_medium"
+                        style="padding-top: 15px;">
+                        <lightning-input label="TIME" name='TIME' type='time' onchange={changeHandler}
+                            value={equipmentProgramming.Time__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-left_medium">
+                        <lightning-input type="checkbox" label="EBT" name="EBT" onchange={changeHandler}
+                            checked={equipmentProgramming.EBT__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <template if:true={showEBTH}>
+                        <div class="slds-size_1-of-4 slds-form-element slds-form-element_horizontal slds-p-right_medium slds-p-top_medium slds-p-left_medium"
+                            style="padding-top: 15px;">
+                            <lightning-input label="EBT #" name='EBT_H' type='text' onchange={changeHandler}
+                                value={equipmentProgramming.EBTH__c} required={isRequiredEBT} class={EBTHError}
+                                disabled={status}>
+                            </lightning-input>
+                            <div if:true={errorValue} class="slds-p-top_xx-small">
+                                <lightning-icon variant="error" size="x-small" icon-name="utility:error">
+                                </lightning-icon>&nbsp;&nbsp;{errorText}
+                            </div>
+                        </div>
+                    </template>
+                    <template if:false={showEBTH}>
+                        <div class="slds-size_1-of-4 slds-form-element slds-form-element_horizontal slds-p-right_medium slds-p-top_medium slds-p-left_medium"
+                            style="padding-top: 15px;">
+                        </div>
+                    </template>
+                    <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-left_medium">
+                        <lightning-input type="checkbox" label="NO SIGNATURE" name="NO_SIGNATURE"
+                            onchange={changeHandler} checked={equipmentProgramming.No_Signature__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-left_medium">
+                        <lightning-input type="checkbox" label="QUICK CLOSE" name="QUICK_CLOSE" onchange={changeHandler}
+                            checked={equipmentProgramming.Quick_Close__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium">
+                        <lightning-input type="checkbox" label="CONTACTLESS" name="CONTACTLESS" onchange={changeHandler}
+                            checked={equipmentProgramming.Contactless__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium">
+                        <lightning-input type="checkbox" label="RETAIL TIP" name="Retail_Tip" onchange={changeHandler}
+                            checked={equipmentProgramming.Retail_Tip__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_large slds-p-left_medium">
+                        <lightning-input type="checkbox" label="CASHBACK (PIN DEBIT)" name="CASHBACK_PIN_DEBIT"
+                            onchange={changeHandler} checked={equipmentProgramming.CASHBACK_PIN_DEBIT__c}
+                            disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_2-of-4 slds-form-element slds-form-element_horizontal slds-p-right_medium slds-p-top_large slds-p-left_medium"
+                        style="padding-top: 25px;">
+                        <lightning-input label="MAX CASHBACK ($)" name='MAX_CASHBACK' type='number'
+                            onchange={changeHandler} field-level-help="Max cashback amount is $400"
+                            value={equipmentProgramming.MAX_CASHBACK__c} class={MAX_CASHBACKError} disabled={status}>
+                        </lightning-input>
+                        <div if:true={errorValueMaxCashback} class="slds-p-top_xx-small">
+                            <lightning-icon variant="error" size="x-small" icon-name="utility:error">
+                            </lightning-icon>&nbsp;&nbsp;{errorTextMaxCashback}
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-4">
+
+                    </div>
+
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_small slds-p-left_medium">
+                        <lightning-textarea label="NOTES" name="Notes" value={Notes} onchange={changeHandler}
+                            disabled={status}>
+                        </lightning-textarea>
+                    </div>
+
+                </template>
+                <template if:true={showRestaurantSection}>
+                    <div class="slds-size_1-of-2 slds-p-top_medium slds-p-left_small" style="font-weight: bold;">
+                        RESTAURANT
+                    </div>
+                    <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+
+                    <div
+                        class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-left_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="AUTO BATCH" name="AUTO_BATCH" onchange={changeHandler}
+                            checked={equipmentProgramming.AUTO_BATCH__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="FINE DINNING" name="FINE_DINNING"
+                            onchange={changeHandler} checked={equipmentProgramming.Fine_Dining__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="SERVER PROMPT" name="SERVER_PROMPT"
+                            onchange={changeHandler} checked={equipmentProgramming.Server_Prompt_CA_Only__c}
+                            disabled={status}>
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="TIP" name="TIP" onchange={changeHandler}
+                            checked={equipmentProgramming.TIP__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div
+                        class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-left_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="TAB" name="TAB" onchange={changeHandler}
+                            checked={equipmentProgramming.TAB__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_3-of-4 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+                </template>
+                <template if:true={showLodgingSection}>
+                    <div class="slds-size_1-of-2 slds-p-top_medium slds-p-left_small" style="font-weight: bold;">
+                        LODGING
+                    </div>
+                    <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+                    <div
+                        class="slds-size_2-of-5 slds-p-right_medium slds-p-top_medium slds-p-left_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="ADD LOADGING (QUICK CLOSE)" name="ADD_LOADGING"
+                            onchange={changeHandler} checked={equipmentProgramming.Add_Lodging_Quick_Close_Default__c}
+                            disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="QUICK STAY-US ONLY" name="QUICK_STAY_US_ONLY"
+                            onchange={changeHandler} checked={equipmentProgramming.Quick_Stay_US_Only__c}
+                            disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_2-of-4 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+                </template>
+                <template if:true={showCardNotPresentSection}>
+                    <div class="slds-size_1-of-2 slds-p-top_medium slds-p-left_small" style="font-weight: bold;">
+                        CARD NOT PRESENT
+                    </div>
+                    <div class="slds-size_1-of-2 slds-p-right_medium slds-p-top_xx-small">
+                    </div>
+                    <div
+                        class="slds-size_2-of-5 slds-p-right_medium slds-p-top_medium slds-p-left_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="ADD CARD NOT PRESENT" name="ADD_CARD_NOT_PRESENT"
+                            onchange={changeHandler} checked={equipmentProgramming.Add_Card_Not_Present__c}
+                            disabled={status}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-size_1-of-4 slds-p-right_medium slds-p-top_medium slds-p-top_xx-small">
+                        <lightning-input type="checkbox" label="QUICK CLOSE" name="QUICK_CLOSE" onchange={changeHandler}
+                            checked={equipmentProgramming.Quick_Close__c} disabled={status}>
+                        </lightning-input>
+                    </div>
+                </template>
+
+                <div class="slds-size_1-of-1 slds-clearfix">
+                    <div class="slds-float_right slds-p-top_small slds-p-right_medium">
+                        <lightning-button class="slds-m-top_small" variant="brand" label="Save" title="Save"
+                            onclick={handleEquipmentProgrammingSaveClick} disabled={status}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </div>
+    <div class="spinner">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+            </lightning-spinner>
+        </template>
+    </div>
+</template>

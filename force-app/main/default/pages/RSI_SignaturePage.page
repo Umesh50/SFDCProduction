@@ -1,0 +1,56 @@
+<apex:page standardController="signature__Signature__c" extensions="signature.SignatureExt,RSI_repeatCon" language="{!language}" sidebar="{!isSideBar}" showHeader="{!isHeader}" id="pg" title="Simple Signature"  docType="html-5.0" tabStyle="signature__Sign__tab" standardStylesheets="true" action="{!getStrings}">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+            <apex:slds />
+        </head>
+        <body>
+          <div class="slds">
+            <div class="slds-page-header" role="banner" id="deskHeader">
+              <div class="slds-grid">
+                <span class="slds-text-heading--small"><b>Application Signature    -     {!ownerOffName}</b></span>
+                <!--<button type="button" onclick="window.open('http://login.salesforce.com/','_blank');return false;" style="position:absolute;top:-7px;right:270px;background-color:white">Preview Document</button>-->
+                <div style="position:absolute;top:6px;right:220px;border-left:thin #d8dde6 solid; height:50px;" />
+                  <a href="http://www.simplesignatureapp.com/" target="_blank"><apex:image url="{!$Resource.signature__SSLogo}" style="position:absolute;top:2px;right:14px;"/></a>
+                </div>
+              </div>
+              <div class="slds-page-header" role="banner" id="mobHeader">
+                <div width="100%">                     
+                  <span class="slds-text-heading--small"><center><b>Application Signature (<p><b>{!ownerOffName}</b></p>)</b></center></span>
+                  <br/>
+                  <table width="100%">
+                    <col width="55%"/>
+                    <col width="4%"/>
+                    <col width="41%"/>
+                    <tr>
+                      <td>
+                        <span><a href="http://www.simplesignatureapp.com/" target="_blank"><apex:image url="{!$Resource.signature__SSLogo}" /></a></span>
+                      </td>
+                      <td>
+                        <div style="border-left:thin #d8dde6 solid; height:50px;" />
+                      </td>
+                      <td>
+                      <!--<button type="button" onclick="window.open('http://login.salesforce.com/','_blank');return false;" >Preview Document</button>-->
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+               <apex:outputPanel rendered="{!isDiplay}">               
+                   
+                <div style="margin: 1em 1em 2em 1em">The indicated officer(s) identified below have the authorization to execute the merchant processing agreement on behalf of the here with in named business. By signing below, merchant(s) acknowledges no verbal agreements or representations have been made and Merchant and Guarantor have relied solely on the Merchant Application and Agreement. Merchant acknowledges to have read the Company Representations and Certifications, as well as the Personal Guarantee conditions provided. THE UNDERSIGNED MERCHANT UNDERSTANDS THAT THIS AGREEMENT SHALL NOT TAKE EFFECT UNTIL SAID MERCHANT HAS BEEN APPROVED BY BANK AND A MERCHANT NUMBER IS ISSUED. BY SIGNING BELOW, THE INDICATED OFFICER(S) HEREBY CERTIFY, TO THE BEST OF THEIR KNOWLEDGE, THAT THE BUSINESS INFORMATION PROVIDED ON THE APPLICATION, INCLUDING THE OWNERSHIP INFORMATION, IS COMPLETE AND CORRECT.  
+</div>
+                <div style="-webkit-transform:translateZ(0px)">
+                  
+                  <signature:SignatureForm id="a0B2i000003tNndEAE"/>
+                </div>   
+               </apex:outputPanel>
+               <apex:outputPanel rendered="{!NOT(isDiplay)}">
+                  No records found for signature
+               </apex:outputPanel>         
+          </div>
+        </body>
+    </html>
+</apex:page>

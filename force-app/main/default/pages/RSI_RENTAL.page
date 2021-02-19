@@ -1,0 +1,199 @@
+<apex:page showHeader="false" standardStylesheets="false" renderAs="pdf" applyBodyTag="false" controller="OwnerOrOfficerHelper" action="{!getData}">
+
+    <head>
+        <style>
+            
+          
+            
+            
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 45%;
+            }
+            @page {
+            size: A4; /*landscape orientation*/
+            /*page numbers in the bottom center of each page in the pdf document*/
+            @bottom-center {
+            content: "";
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;
+            }
+        
+            /*placeholders for other content areas*/
+            @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;
+            }
+            @bottom-left {
+            content: "Paytree";
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;
+            }
+        
+        
+            }
+            h1{
+            background: #7FFFD4;
+            color: #006BB6;
+            display: block;
+            align-self: center;
+            font-weight: normal;
+            font-size: 10px;
+            padding: 3px 3px 3px 6px;
+            }
+        
+            p.a {
+            font-style: oblique;
+            }
+            .grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 50px;
+ 
+  padding: 10px;
+}
+
+            
+        </style>
+    </head>
+
+    <body>
+        
+
+        <apex:outputPanel rendered="{!IF(isRental,'true','false')}">
+        <h1>
+               <b style="color:white"> RENTAL AGREEMENT</b>
+            </h1>
+<div>
+        <p>1. <b>Definitions.</b> References to the Rental Agreement (“Rental”), “we”, “us” or "Owner" shall
+                        mean Paytree, its successors or assigns. References to “you,” “your” and “Merchant” shall mean
+                        the Business indicated on the Merchant Application Agreement. The rental equipment and related
+                        software indicated in the Merchant Application is hereinafter referred to as the “Equipment.”
+                    </p>
+                    
+                    <p>2. <b>Debit/Credit Authorization.</b>Merchant hereby authorizes Paytree, or its designee,
+                        successor or assign to automatically withdraw the base monthly payment and any other amounts,
+                        including any and all loss or destruction waivers, taxes, insurance, noncompliance fees or other
+                        charges now due or hereafter imposed, by initiating debit entries to any bank or other accounts.
+                        The authority is to remain in full force and effect until Paytree has received the rental
+                        equipment from the Merchant in such a manner as to afford Paytree reasonable opportunity to act
+                        on it and all obligations of the Merchant to Paytree that have arisen under this Agreement have
+                        been paid in full. In the event of default of any obligation hereunder, Merchant authorizes
+                        Paytree to debit any such accounts for the full amount due. Any payment (whether paid by debit
+                        or other means) that is not honored for any reason will be subject to a service fee imposed by
+                        Paytree. Furthermore, Merchant hereby authorize any bank or financial institution to accept any
+                        debit imposed by Paytree. </p>
+                   
+                    <p>3.<b> Warranty.</b> Equipment provided under this Agreement may be new or refurbished. Paytree
+                        warrants against defects in material and workmanship but not against obsolescence of any new or
+                        refurbished Equipment for a period of ninety (90) days from the date the Merchant Application is
+                        signed. In the event of a defect in material or workmanship of the Equipment, Lessor’s sole
+                        obligation and your exclusive remedy shall be the repair or replacement of the defective
+                        Equipment at Paytree’s sole discretion. Merchant will be charged for shipping and handling for
+                        all replacement Equipment. You acknowledge that we do not manufacture the Equipment. We do not
+                        represent the manufacturer or the licensor of any software and you selected the equipment based
+                        upon your own judgement. This warranty is exclusive and in lieu of all other warranties,
+                        expressed or implied, statutory or otherwise. You agree that regardless of cause, Payree is not
+                        responsible for and you will not make any claim against Paytree for any damages, including but
+                        not limited to, loss of income, loss of revenue, economical loss, consequential, direct or
+                        indirect, special or punitive relating to the Equipment, software or this Agreement. Paytree
+                        shall not be liable for any damages caused by interruption, failure, defect, or delay in the
+                        operation, maintenance, repair or replacement of the equipment. Merchant further acknowledges
+                        and agrees that Paytree may require you to upgrade your equipment to an EMV capable terminal in
+                        line with implementation of Brand regulations and requirements. Failure of MERCHANT to upgrade
+                        may result in penalties including, but not limited to, the downgrading of transactions and
+                        increased processing fees.</p>
+                   
+                    <p>4.<b> Terms.</b> This Rental Agreement becomes effective after your credit is approved and the
+                        Rental is accepted by Paytree. Each base monthly payment (plus applicable taxes, insurance and
+                        other amounts) shall be payable monthly in advance. Paytree may require the first and/or the
+                        first and last payment be made in advance. The first or second monthly base payment and
+                        subsequent monthly payments shall be due at a date assigned by Paytree until the balance of the
+                        Agreement has been paid in full. Your obligation to pay all base monthly and other payments
+                        shall be absolute and unconditional and is not subject to any abatement, set-off, or
+                        counterclaim for any reason.</p>
+                   
+                    <p>5. <b>Assignment.</b> YOU SHALL NOT ASSIGN LICENSE OR OBLIGATIONS UNDER THIS AGREEMENT OR ENTER
+                        INTO ANY SUBLEASE OF ALL OR ANY PART OF THE EQUIPMENT WITHOUT THE PRIOR WRITTEN CONSENT OF
+                        PAYTREE, WHICH CONSENT MAY BE WITHHELD AT THE SOLE DISCRETION OF PAYTREE.</p>
+                   
+                    <p>6.<b> Title.</b> Paytree shall at all times retain title to the Equipment. All documents of title
+                        and evidence of delivery shall be delivered to Paytree. </p>
+                    
+                    <p>7.<b> Care, Use and Location.</b> You shall maintain the Equipment in good operating condition,
+                        repair and appearance, and protect the same from deterioration, destruction, loss or impairment
+                        other than normal wear and tear. You shall use Equipment only in the regular course of business
+                        and shall not make any modifications, alterations or additions to or change the location of the
+                        Equipment without the prior written consent of Paytree.</p>
+                   
+                    <p>8.<b> Wireless Terminal Coverage.</b> Merchant understands and agrees that Paytree does not
+                        guarantee coverage or connectivity for wireless terminals.</p>
+                    
+                    <p>9.<b> Cancellation.</b> If merchant wishes to terminate this agreement, all Equipment in fully
+                        working condition must be returned within ten (10) days of their cancellation notice. If
+                        equipment is not returned within the time allotted, or if there is inactivity on the processing
+                        account for more than thirty (30) days, Merchant will be charged for the balance of all
+                        equipment.</p>
+                    
+                    <p>10.<b> Insurance.</b> You shall keep the Equipment insured against all risks of loss or damage
+                        from any cause whatsoever for not less than the full replacement value thereof. You shall carry
+                        public liability insurance, both personal injury and property damage, covering the Equipment.
+                        All such insurance shall be in form and with companies satisfactory to Paytree and shall name
+                        Paytree as Loss Payee as our interest may appear with respect to property damage coverage and as
+                        additional insured with respect to public liability coverage. You shall pay the premiums for
+                        such insurance and deliver to Paytree satisfactory evidence of insurance coverage required
+                        hereunder. You hereby irrevocably appoint Paytree as your attorney-in-fact to make claim for,
+                        receive payment of and execute and endorse all documents, checks or drafts received in payment
+                        for loss or damage under any such insurance policy.</p>
+                    
+                    <p>11.<b> Event of Default.</b> You are in default under this Agreement if:
+                        a. you fail to pay any base monthly payment, rental or other amount hereunder when due;
+                        b. you fail to perform any of the terms, covenants or conditions of this Agreement;
+                        c. your processing agreement with Paytree or its affiliates is closed or canceled;
+                        d. the Equipment becomes involved in any civil or criminal actions or is seized by law
+                        enforcement agencies;
+                        e. you (or any guarantor of your obligation hereunder) makes a general assignment for the
+                        benefit of creditors, files a voluntary bankruptcy petition, becomes subject of an order of
+                        relief or is declared insolvent in any federal or state bankruptcy or insolvency proceeding,
+                        files a petition seeking reorganization, arrangement, recomposition, readjustment, liquidation,
+                        dissolution or similar relief, or seeks, consents to, or acquiesces in the appointment of a
+                        trustee, receiver or liquidator of any person or property;
+                        f. Paytree is unable to collect from or debit any account for any reason; or
+                        g. Merchant or any guarantor’s bank or financial institution does not honor debit payment for
+                        any reason.
+                    </p>
+                   
+                    <p>12.<b> Default. </b>If the Merchant is in default under this Rental, without notice to or demand
+                        on the Merchant, Paytree may take possession of the equipment as provided by law, deduct the
+                        costs of recovery (including attorney fees and legal costs), repair, and related costs, and hold
+                        the Merchant responsible for any deficiency. Paytree shall be obligated to re-rent the
+                        equipment, or otherwise mitigate the damages from the default, only as required by law.</p>
+                   
+                    <p>13.<b> End of Rental Agreement.</b> At the expiration and end of the Merchant term of the
+                        application, provided that you are not in default, you shall elect to disconnect and return the
+                        Equipment, freight prepaid, to us in good repair, condition and working order, in a manner and
+                        to a location Paytree designates, and all right to use the Equipment and Software shall
+                        terminate.</p>
+                    
+                    <p>14.<b> GOVERNING LAW.</b> This contract shall be construed in accordance with the laws of the
+                        State of California.</p>
+                    
+                    <p>15.<b> ENTIRE AGREEMENT AND MODIFICATION.</b> This contract constitutes the entire agreement
+                        between the parties. No modification or amendment of this contract shall be effective unless in
+                        writing and signed by both parties. This contract replaces any and all prior agreements between
+                        the parties.</p>
+</div>
+            <apex:repeat value="{!listOwnerOff}" var="res">
+             <div style="width: 100%; display: table;">
+    <div style="display: table-row">
+        <div style="width: 100px; display: table-cell;">  Signature:<span><apex:outputField value="{!res.Signature__c}" /></span> </div>
+        <div style="width: 200px; display: table-cell;"> Name:<span><apex:outputField value="{!res.FullName__c}"/></span>   </div>
+         <div style="width: 200px; display: table-cell;">  Title:<span><apex:outputField value="{!res.Principal_Title__c}"/></span>  </div>
+        <div style="display: table-cell;">Date:<span><apex:outputField value="{!res.Sign_Date__c}"/></span> </div>
+    </div>
+</div>
+            </apex:repeat>
+        </apex:outputPanel>
+    </body>
+</apex:page>

@@ -1,0 +1,28 @@
+.customCard {
+    position: relative;
+    padding: 0;
+    /*background: url('https://us.servicetitan.com/rs/304-EAE-038/images/pub-glendale.jpg') no-repeat center 20%;*/
+    /*border-radius: 0.25rem;*/
+    background-clip: padding-box;
+    box-sizing: border-box;
+    /*color: aliceblue;*/
+    background-size: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.textDecoration {
+    color: darkblue;
+    white-space: pre-wrap;
+    font-weight: 900;
+}
+
+.sharpBorder {
+    border-radius: 0px!important;
+}
+
+.greenIcon {
+    background-color: green;
+}
+
+.redIcon {
+    background-color: red;
+}

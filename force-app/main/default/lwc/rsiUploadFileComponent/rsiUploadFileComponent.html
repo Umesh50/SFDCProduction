@@ -1,0 +1,33 @@
+<!--
+  @description       :
+  @author            : Tanmay Jain
+  @group             :
+  @last modified on  : 11-09-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-09-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <div>
+        <p>{documentType}</p>
+        <lightning-layout>
+            <lightning-layout-item size="10">
+                <div style="height: 100px;">
+                    <div class="slds-file-selector slds-file-selector_integrated slds-file-selector_integrated">
+                        <div class="slds-file-selector__dropzone slds-file-selector__dropzone_integrated slds-has-drag slds-has-drag-over" aria-hidden="true" style="z-index: auto;">
+                          <lightning-input type="file" class="slds-file-selector__input slds-assistive-text" accept={acceptedFormats} id="file-upload-input-01" tabindex="-1" onchange={onFileUpload}></lightning-input>
+                          <label class="slds-file-selector__body slds-file-selector__body_integrated" for="file-upload-input-01" style="height: 85px;">
+                            <lightning-icon icon-name="utility:upload"></lightning-icon>
+                            <span class="slds-file-selector__text slds-file-selector__text_integrated slds-text-heading_medium slds-text-align_center">Drop Files</span>
+                          </label>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="2">
+                <lightning-icon icon-name={statusIcon} size="x-small" variant={iconStatus}></lightning-icon>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

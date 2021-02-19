@@ -1,0 +1,74 @@
+<!--
+  @description       :
+  @author            : Umesh Kumar
+  @group             :
+  @last modified on  : 12-31-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-05-2020   Umesh Kumar   Initial Version
+-->
+
+<template>
+        <lightning-card >
+                  <lightning-card icon-name="standard:record_create" title="Application Detail"></lightning-card>
+                    <div class="slds-card__body">
+                        <slot>
+                          <div style="padding: 10px;" if:false={refreshView}>
+                            <lightning-record-edit-form object-api-name="Opportunity" onsubmit={SubmitHandler} record-id={recordId}  onsuccess={handleSuccess} onerror={handleError} class="slds-scrollable_y" >
+                              <lightning-messages></lightning-messages>
+                                <lightning-layout multiple-rows>
+                                  <lightning-layout-item size="12">
+                                    <lightning-layout multiple-rows>
+
+                                       <lightning-layout-item size="6" padding="around-small">
+                                         <lightning-input-field  field-name="Name"  disabled={status} onchange={handleAppNameValidation} class={nameError}></lightning-input-field>
+                                         <div if:true={nameErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{nameErrorText}</div>
+                                       </lightning-layout-item>
+
+                                         <lightning-layout-item size="6" padding="around-small">
+                                            <lightning-input-field  field-name="AccountId"  disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                         </lightning-layout-item>
+
+                                         <lightning-layout-item size="6" padding="around-small">
+                                            <lightning-input-field  field-name="Business_Contact_First_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                         </lightning-layout-item>
+
+                                       <lightning-layout-item size="6" padding="around-small">
+                                          <lightning-input-field  field-name="Business_Contact_Last_Name__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                       </lightning-layout-item>
+
+                                       <lightning-layout-item size="6" padding="around-small">
+                                        <lightning-input-field  field-name="Contact_Phone_Number__c" disabled={status} onchange={handlePhoneValidation} class={phoneError}></lightning-input-field>
+                                        <div if:true={phoneErrorValue}><lightning-icon variant="error" size="x-small" icon-name="utility:error"></lightning-icon>&nbsp;&nbsp;{phoneErrorText}</div>
+                                       </lightning-layout-item>
+
+                                     <lightning-layout-item size="6" padding="around-small">
+                                        <lightning-input-field  field-name="Contact_Email_Address__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                     </lightning-layout-item>
+
+                                       <lightning-layout-item size="6" padding="around-small">
+                                          <lightning-input-field  field-name="Type" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                       </lightning-layout-item>
+
+                                       <lightning-layout-item size="6" padding="around-small">
+                                          <lightning-input-field  field-name="StageName" disabled ></lightning-input-field>
+                                       </lightning-layout-item>
+                                       <lightning-layout-item size="12">
+                                          <p style="font-size:medium;"><lightning-icon icon-name="standard:record_create" size="small"></lightning-icon>&nbsp;&nbsp;<b></b> Detail</p>
+                                          </lightning-layout-item>
+                                       <lightning-layout-item size="6" padding="around-small">
+                                          <lightning-input-field  field-name="Processor__c" disabled={status} onchange={handlewithoutSave}></lightning-input-field>
+                                       </lightning-layout-item>
+                                    </lightning-layout>
+                                     </lightning-layout-item>
+                                  </lightning-layout>
+                                  <div style="text-align: right;">
+                                    <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save" icon-name="utility:save" disabled={status}></lightning-button>
+                                 </div>
+                            </lightning-record-edit-form>
+                          </div>
+                        </slot>
+                    </div>
+    </lightning-card>
+</template>

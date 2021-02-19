@@ -1,0 +1,183 @@
+<!--
+  @description       :
+  @author            : Umesh Kumar
+  @group             :
+  @last modified on  : 11-06-2020
+  @last modified by  : Umesh Kumar
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-06-2020   Umesh Kumar   Initial Version
+-->
+
+<template>
+  <lightning-card>
+    <div>
+      <header class="slds-modal__header">
+        <c-rsi-custom-path steps-array={steps} oncallstep1={moveToStepOne} oncallstep2={moveToStepTwo} oncallstep3={moveToStepThree} oncallstep4={moveToStepFour} oncallstep5={moveToStepFive} oncallstep6={moveToStepSix} oncallstep7={moveToStepSeven}></c-rsi-custom-path>
+      </header>
+      <!-- Modal/Popup Box LWC body starts here -->
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+         <!--show and hide the VAR and Equipment -->
+         <template if:false={showStepOne}>
+          <c-rsi-application onopportunityselection={handleApplicationId} record-id={recordId}></c-rsi-application>
+        </template>
+        <!--show and hide the application information -->
+        <template if:true={showStepTwo}>
+            <c-dynamic-add-remove-row  record-id={recordId}></c-dynamic-add-remove-row>
+        </template>
+
+        <!--show and hide the Business Information -->
+        <template if:true={showStepThree}>
+         <c-rsi-business-information account-id={selectedAccountId} record-id={recordId} ></c-rsi-business-information>
+         </template>
+
+        <!--show and hide the Owner and Officers Information -->
+        <template if:true={showStepFour}>
+          <c-rsi-business-environment account-id={selectedAccountId}> </c-rsi-business-environment>
+        </template>
+
+        <!--show and hide the upload document section -->
+        <template if:true={showStepFive}>
+          <c-rsi-owners-or-officers-on-application record-id={recordId}></c-rsi-owners-or-officers-on-application>
+        </template>
+
+        <!--show and hide the upload file section -->
+        <template if:true={showStepSix}>
+          <c-rsi-upload-files-to-application record-id={recordId} object-api-name={objectApiName}>
+          </c-rsi-upload-files-to-application>
+        </template>
+
+        <!--show and hide the sign document section -->
+        <template if:true={showStepSeven}>
+          <c-rsi-sign-documents record-id={recordId} account-id={selectedAccountId}></c-rsi-sign-documents>
+        </template>
+
+      </div>
+      <footer class="slds-modal__footer">
+        <template if:false={showStepOne}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Next" onclick={goToStepTwo}>
+              </lightning-button>
+            </div>
+          </div>
+
+        </template>
+        <!--show and hide the application information section button-->
+        <template if:true={showStepTwo}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Previous" onclick={goBackToStepOne}>
+              </lightning-button>&nbsp;&nbsp;
+              <lightning-button class="slds-m-top_small" variant="brand" label="Next"
+                onclick={goToStepThree}></lightning-button>
+            </div>
+          </div>
+        </template>
+
+        <!--show and hide the Business Information section button-->
+        <template if:true={showStepThree}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Previous"
+                onclick={goBackToStepTwo}></lightning-button>&nbsp;&nbsp;
+              <lightning-button class="slds-m-top_small" variant="brand" label="Next" onclick={goToStepFour}>
+              </lightning-button>
+            </div>
+          </div>
+        </template>
+        <!--show and hide the Owner and Officers Information section button -->
+        <template if:true={showStepFour}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Previous"
+                onclick={goBackToStepThree}></lightning-button>&nbsp;&nbsp;
+              <lightning-button class="slds-m-top_small" variant="brand" label="Next" onclick={goToStepFive}>
+              </lightning-button>
+            </div>
+          </div>
+        </template>
+
+        <!--show and hide the upload document section button -->
+        <template if:true={showStepFive}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Previous"
+                onclick={goBackToStepFour}></lightning-button>&nbsp;&nbsp;
+              <lightning-button class="slds-m-top_small" variant="brand" label="Next" onclick={goToStepSix}>
+              </lightning-button>
+
+            </div>
+          </div>
+        </template>
+        <!--show and hide the sign document section button -->
+        <template if:true={showStepSix}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Previous"
+              onclick={goBackToStepFive}></lightning-button>&nbsp;&nbsp;
+            <lightning-button class="slds-m-top_small" variant="brand" label="Next" onclick={goToStepSeven}>
+            </lightning-button>
+             
+            </div>
+          </div>
+        </template>
+
+         <!--show and hide the sign document section button -->
+         <template if:true={showStepSeven}>
+          <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-3">
+            </div>
+            <div class="slds-size_1-of-3">
+              <div class="slds-text-align_center"><img src={logoImage}
+                  style="height:35px;width: 120px;border-radius: 15px;"></div>
+            </div>
+            <div class="slds-size_1-of-3">
+              <lightning-button class="slds-m-top_small" variant="brand" label="Previous"
+                onclick={goBackToStepSix}></lightning-button>&nbsp;&nbsp;
+              <lightning-button class="slds-m-top_small" variant="brand" label="Submit" onclick={goToSubmit}>
+              </lightning-button>
+            </div>
+          </div>
+        </template> 
+      </footer>
+    </div>
+    <!--/template-->
+  </lightning-card>
+</template>

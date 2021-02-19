@@ -1,0 +1,145 @@
+<template>
+    <div style="padding: 10px;">
+        <lightning-record-edit-form object-api-name="OpportunityLineItem" density="comfy" onsuccess={handleSuccess}
+            record-id={recordId} onsubmit={onSubmitHandler}>
+            <lightning-messages> </lightning-messages>
+            <div class="slds-grid slds-wrap slds-form">
+                <div class="slds-size_1-of-1" style="margin-top: -50px;">
+                    <template if:true={showButtons}>
+                        <div class="slds-float_right slds-p-right_medium">
+                            <lightning-button-icon icon-name="utility:add" slot="actions" onclick={addRow}
+                                class="slds-p-right_small" alternative-text="Add" disabled={status}>
+                            </lightning-button-icon>
+                            <lightning-button-icon icon-name="utility:dash" variant="brand" onclick={removeRow}
+                                alternative-text="Delete" disabled={status}>
+                            </lightning-button-icon>
+                        </div>
+                    </template>
+                </div>
+                <!-- <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                    <lightning-input-field field-name="Equipment_Type__c" class="slds-form-element_stacked">
+                    </lightning-input-field>
+                </div> -->
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                    <lightning-input-field field-name="Equipment__c" class="slds-form-element_stacked" required="true"
+                        onchange={handleEquipment2Change} value={defaultEquipment} disabled={isDisableEquipment}>
+                    </lightning-input-field>
+                </div>
+                <!-- value={defaultEquipment2} -->
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                    <lightning-input-field field-name="Ownership_Type__c" class="slds-form-element_stacked"
+                        onchange={handleOwnershipChange} disabled={status}>
+                    </lightning-input-field>
+                </div>
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                    <lightning-input-field field-name="Quantity" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                    </lightning-input-field>
+                </div>
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                    <lightning-input-field field-name="UnitPrice" class="slds-form-element_stacked" required="true"
+                        value={Equipment1Price} disabled={status} onchange={handlewithoutSave}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small"
+                    style="padding-top: 28px;font-weight:bold;">
+                    {unitMonthString}
+                </div>
+                <template if:true={showPinpadSectionForE1}>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="PINPAD__c" class="slds-form-element_stacked"
+                            onchange={addRowOnPinpadCheck} disabled={status}>
+                        </lightning-input-field>
+                    </div>
+                </template>
+                <template if:true={showSimCardForE1}>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="SIM_Card__c" class="slds-form-element_stacked"
+                            onchange={addRowOnSimCardCheck} disabled={status}>
+                        </lightning-input-field>
+
+                    </div>
+                </template>
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                    <lightning-input-field field-name="SEMI__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                    </lightning-input-field>
+                </div>
+                <template if:false={showPinpadSectionForE1}>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+
+                    </div>
+                </template>
+                <template if:false={showSimCardForE1}>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+
+                    </div>
+                </template>
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                    <lightning-input-field field-name="OpportunityId" class="slds-form-element_stacked slds-hidden"
+                        value={opptyId} disabled={status}>
+                    </lightning-input-field>
+                </div>
+                <div
+                    class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small slds-hidden">
+                    <lightning-input-field value={equipment2Product2Id} field-name="Product2Id"
+                        class="slds-form-element_stacked slds-hidden" required="true" disabled={status}>
+                    </lightning-input-field>
+                </div>
+                <template if:true={showPurchaseCheckboxes}>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="Bill_Merchant__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="Bill_Partner__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                        </lightning-input-field>
+                    </div>
+                </template>
+                <template if:true={showRentalCheckboxes}>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="Bill_Merchant__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="Bill_Partner__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                        </lightning-input-field>
+                    </div>
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="Merchant_Deductible__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                        </lightning-input-field>
+                    </div>
+
+                    <div
+                        class="slds-form-element slds-size_1-of-5 slds-p-right_xx-small slds-p-left_xx-small slds-p-top_xx-small">
+                        <lightning-input-field field-name="Partner_Deductible__c" class="slds-form-element_stacked" disabled={status} onchange={handlewithoutSave}>
+                        </lightning-input-field>
+                    </div>
+                </template>
+
+                <div class="slds-size_1-of-1 slds-clearfix">
+                    <div class="slds-float_right slds-p-right_medium">
+                        <lightning-button variant="brand" type="submit" label="Save" disabled={status}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

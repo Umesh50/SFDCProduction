@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute type="id" name="recordId" />
+    <aura:attribute type="id" name="accountId" />
+    <aura:attribute type="boolean" name="readStatusOnly" />
+    <c:rsi_ApplicationHome recordId="{!v.recordId}" selectedAccountId="{!v.accountId}" readStatusOnly="{!v.readStatusOnly}"> </c:rsi_ApplicationHome>
+</aura:component>

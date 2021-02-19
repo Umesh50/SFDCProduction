@@ -1,0 +1,19 @@
+<!--
+  @description       : 
+  @author            : Tanmay Jain
+  @group             : 
+  @last modified on  : 10-26-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log 
+  Ver   Date         Author        Modification
+  1.0   10-26-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <lightning-layout multiple-rows>
+        <template for:each={uiSetup} for:item="elmnt">
+            <div key={elmnt.fullFieldPath}>
+                <c-rsi-edit-opportunity-field ind-elmnt={elmnt}></c-rsi-edit-opportunity-field>
+            </div>
+        </template>
+    </lightning-layout>
+</template>

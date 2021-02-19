@@ -1,0 +1,130 @@
+<template>
+    <lightning-card>
+        <div class="slds-grid slds-p-top_small">
+            <div class="slds-col slds-grid slds-wrap slds-size_1-of-2">
+                <div class="slds-size_1-of-1">
+                    <div class="slds-text-title_bold slds-float_left slds-p-left_large">
+                        Please confirm your equipment,
+                    </div>
+                </div>
+
+                <template for:each={equipmentWithIcon} for:item="equipment">
+                    <div key={equipment.Id}>
+                        <div class="slds-size_1-of-2 slds-p-top_large">
+                            <div class="slds-align_absolute-center slds-text-heading_small slds-p-top_x-small slds-text-title_bold"
+                                style="color:#75a6a5">
+                                {equipment.value}
+                            </div>
+                        </div>
+
+                        <div class="slds-size_1-of-2 slds-p-top_large">
+                            <template if:true={equipment.isShowIcon}>
+                                <img src={equipment.iconName} style="height: 150px; width: 290px;">
+                            </template>
+                            <template if:false={equipment.isShowIcon}>
+                                <div style="height: 150px; width: 290px;">
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-size_1-of-2 slds-p-top_large">
+                            <div class="slds-align_absolute-center">
+                                <lightning-button class="slds-m-top_small" variant="brand" label="Edit Equipment"
+                                    title="Edit Equipment" onclick={handleEquipmentEditClick}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <div class="slds-border_left slds-p-left_large">
+                    <div class="slds-size_1-of-2 slds-p-top_medium">
+                        <lightning-combobox name="Select your shipping method" label="Select your shipping method"
+                            value={selectedShippingMethod} placeholder="Select method" options={options}
+                            onchange={handleTypeChange}>
+                        </lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-1 slds-p-top_large">
+                        <table class="slds-table slds-table--bordered slds-table--striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><span class="slds-truncate">Product</span></th>
+                                    <th scope="col"><span class="slds-truncate">Purchase Type</span></th>
+                                    <th scope="col"><span class="slds-truncate">Quantity</span></th>
+                                    <th scope="col"><span class="slds-truncate">Unit Price</span></th>
+                                    <th scope="col"><span class="slds-truncate">Amount</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={equipmentList} for:item="equipment">
+                                    <tr key={equipment.Id}>
+                                        <th scope="col">
+                                            <div class="slds-text-title_bold">
+                                                {equipment.Product2.Name}
+                                            </div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-text-title_bold"> {equipment.Ownership_Type__c}</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-text-title_bold"> {equipment.Quantity}</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div> ${equipment.UnitPrice}</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div>
+                                                ${equipment.TotalPrice}  <!-- {equipment.unitMonthString}-->
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center slds-p-top_x-large">
+                          <p> Subtotal : ${subTotals} </p>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center slds-p-top_x-small">
+                           <p> Tax Rate : {taxs} % </p>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center slds-p-top_x-small">
+                           <p> Tax Amt : ${totalTaxAmount} </p>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <div
+                            class="slds-align_absolute-center slds-p-top_x-small slds-border_bottom slds-p-bottom_small">
+                            Shipping : {shippingCharges}
+                            <!--span class=" slds-text-title_bold" > {shippingCharges} </span> <style="color:#75a6a5"-->
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center slds-p-top_x-small slds-text-title_bold">
+                            TOTAL : ${totalAmount}
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center slds-p-top_x-small">
+                            All payments will be collected on your first month’s billing statement
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="slds-size_1-of-1">
+                    <div class="slds-float_right slds-p-top_large">
+                        <lightning-button class="slds-m-top_small" variant="brand" label="START SIGNING"
+                            title="START SIGNING" onclick={handleEquipmentEditClick}>
+                        </lightning-button>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+    </lightning-card>
+</template>

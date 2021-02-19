@@ -1,0 +1,22 @@
+<!--
+  @description       :
+  @author            : Tanmay Jain
+  @group             :
+  @last modified on  : 11-16-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log
+  Ver   Date         Author        Modification
+  1.0   11-13-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    <div>
+        <progress max="100" value={currentPercent} style="width: 97%; height: 10px; display: -webkit-box; position: relative; border-radius: unset; top: 30px; left: 10px;"></progress>
+        <ol style="display: flex;justify-content: space-between;align-items: center;height: 100%;margin: auto;position: relative;z-index: 1">
+            <template for:each={stepsArray} for:item="step">
+                <lightning-button-icon icon-name={step.icon} style="z-index: 100; background: white; border-radius: 15px;" value={step.key} key={step.key} variant="success" size="small" if:false={step.showTree} onclick={changeStep}></lightning-button-icon>
+                <img src={logoImage} key={step.key} if:true={step.showTree} style="width:50px;background: white;border-radius: 20px;">
+            
+            </template>
+        </ol>
+    </div>
+</template>

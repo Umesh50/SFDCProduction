@@ -1,0 +1,36 @@
+<!--
+  @description       : 
+  @author            : Tanmay Jain
+  @group             : 
+  @last modified on  : 10-26-2020
+  @last modified by  : Tanmay Jain
+  Modifications Log 
+  Ver   Date         Author        Modification
+  1.0   10-26-2020   Tanmay Jain   Initial Version
+-->
+<template>
+    {setupDisplayType}
+    <lightning-layout-item size={fieldSize}>
+        <div if:true={showDate}>
+            {indElmnt.fieldLabel}
+        </div>
+        <div if:true={showText}>
+            {indElmnt.fieldLabel}
+        </div>
+        <div if:true={showTextArea}>
+            {indElmnt.fieldLabel}
+        </div>
+        <div if:true={showPickList}>
+            {indElmnt.fieldLabel}
+        </div>
+        <div if:true={showCheckBox}>
+            {indElmnt.fieldLabel}
+        </div>
+        <div if:true={showSection}>
+            {indElmnt.fieldLabel}
+        </div>
+        <div if:true={showLookup}>
+            {indElmnt.fieldLabel}
+        </div>
+    </lightning-layout-item>
+</template>

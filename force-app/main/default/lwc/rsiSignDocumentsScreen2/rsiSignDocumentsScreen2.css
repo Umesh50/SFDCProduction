@@ -1,0 +1,19 @@
+.section-color {
+    background-color:#75A6A5;
+    font-size: medium;
+    text-emphasis-color: white;
+  }
+  
+  .text-color{
+    color:#75A6A5 ;
+  }
+  
+  .sub-section-color{
+    background-color: #E5E4E2;
+    font-size: medium;
+  }
+  
+
+p.a {
+  font-style: italic;
+}
